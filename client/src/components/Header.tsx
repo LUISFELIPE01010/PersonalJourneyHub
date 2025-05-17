@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-import { CgGym } from "react-icons/cg";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -40,9 +39,8 @@ const Header = () => {
       }`}
     >
       <div className="container-custom flex justify-between items-center">
-        <a href="#" className="text-2xl font-bold text-primary flex items-center gap-2">
+        <a href="#" className="text-2xl font-bold text-primary">
           Junior Nobrega
-          <CgGym className="text-red-600" size={24} />
         </a>
 
         <nav className="hidden md:flex space-x-8">
