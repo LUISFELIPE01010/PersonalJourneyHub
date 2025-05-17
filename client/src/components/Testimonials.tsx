@@ -108,15 +108,15 @@ const Testimonials = () => {
   const translateValue = `-${currentIndex * (100 / slidesToShow)}%`;
 
   return (
-    <section id="depoimentos" className="py-16 bg-secondary section-fade">
+    <section id="depoimentos" className="py-20 bg-secondary section-fade">
       <div className="container-custom">
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <h2 className="section-title">Resultados comprovados</h2>
-          <div className="section-divider mb-4"></div>
+          <div className="section-divider"></div>
           <p className="text-lg">Mais de 100 alunos já treinam com Junior e comprovam resultados reais.</p>
         </div>
         
-        <div className="relative">
+        <div className="relative px-4 md:px-12">
           <div className="overflow-hidden">
             <div 
               ref={sliderRef}
@@ -126,7 +126,7 @@ const Testimonials = () => {
               {testimonials.map((testimonial) => (
                 <div 
                   key={testimonial.id}
-                  className={`px-4 ${
+                  className={`px-4 md:px-6 ${
                     slidesToShow === 3 ? "min-w-[33.333%]" : "min-w-full"
                   }`}
                 >
@@ -155,14 +155,14 @@ const Testimonials = () => {
           </Button>
         </div>
         
-        <div className="mt-8 flex justify-center">
-          <div className="flex space-x-2">
+        <div className="mt-12 flex justify-center">
+          <div className="flex space-x-3">
             {Array.from({ length: Math.ceil(testimonials.length / slidesToShow) }).map((_, index) => {
               const dotIndex = index * slidesToShow;
               return (
                 <button
                   key={index}
-                  className={`w-3 h-3 rounded-full ${
+                  className={`w-4 h-4 rounded-full ${
                     currentIndex === dotIndex ? "bg-primary" : "bg-gray-300"
                   }`}
                   onClick={() => goToSlide(dotIndex)}
