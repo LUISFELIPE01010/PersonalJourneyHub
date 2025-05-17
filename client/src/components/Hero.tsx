@@ -24,7 +24,8 @@ const Hero = () => {
             </p>
             <Button 
               onClick={scrollToContact}
-              className="btn-primary"
+              className="btn-primary text-lg px-8 py-4"
+              size="lg"
             >
               Quero treinar com você
             </Button>
