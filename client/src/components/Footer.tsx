@@ -2,15 +2,15 @@ import { FaInstagram, FaFacebook, FaYoutube, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-900 text-white py-8">
+    <footer className="bg-zinc-900 text-white py-12">
       <div className="container-custom">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <h3 className="text-xl font-bold mb-2">Junior Nobrega</h3>
-            <p>Personal Trainer CREF 000000-G/XX</p>
+          <div className="mb-8 md:mb-0">
+            <h3 className="text-2xl font-bold mb-3">Junior Nobrega</h3>
+            <p className="text-gray-300">Personal Trainer CREF 000000-G/XX</p>
           </div>
           
-          <div className="flex space-x-4">
+          <div className="flex space-x-6">
             <a 
               href="#" 
               className="text-white hover:text-primary transition"
@@ -44,7 +44,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="mt-8 text-center text-sm text-gray-400">
+        <div className="mt-10 pt-8 border-t border-gray-800 text-center text-sm text-gray-400">
           <p>&copy; {new Date().getFullYear()} Junior Nobrega Personal Trainer. Todos os direitos reservados.</p>
         </div>
       </div>
