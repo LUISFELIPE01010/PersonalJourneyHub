@@ -32,8 +32,8 @@ const Hero = () => {
           </div>
           <div className="md:w-1/2">
             <img 
-              src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80" 
-              alt="Personal trainer Junior Nobrega coaching a client" 
+              src="/attached_assets/image_1747507564974.png" 
+              alt="Personal trainer Junior Nobrega" 
               className="rounded-xl shadow-lg w-full h-auto object-cover" 
             />
           </div>
