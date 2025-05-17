@@ -16,14 +16,14 @@ const BenefitCard = ({ image, title, description }: { image: string, title: stri
 
 const Benefits = () => {
   return (
-    <section id="beneficios" className="py-16 section-fade">
+    <section id="beneficios" className="py-20 section-fade">
       <div className="container-custom">
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <h2 className="section-title">O que você ganha treinando com Junior Nobrega?</h2>
           <div className="section-divider"></div>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
           <BenefitCard 
             image="https://images.unsplash.com/photo-1571019613576-2b22c76fd955?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
             title="Emagrecimento eficaz" 
