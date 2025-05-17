@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "./ui/card";
 
 const BenefitCard = ({ image, title, description }: { image: string, title: string, description: string }) => (
   <Card className="bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
