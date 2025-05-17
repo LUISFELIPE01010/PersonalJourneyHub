@@ -32,7 +32,7 @@ const Hero = () => {
           </div>
           <div className="md:w-1/2">
             <img 
-              src="/attached_assets/482729031_18487879282000610_862038648878488716_n.jpg" 
+              src="/foto-prin.jpg" 
               alt="Personal trainer Junior Nobrega" 
               className="rounded-xl shadow-lg w-full h-auto object-cover" 
             />
