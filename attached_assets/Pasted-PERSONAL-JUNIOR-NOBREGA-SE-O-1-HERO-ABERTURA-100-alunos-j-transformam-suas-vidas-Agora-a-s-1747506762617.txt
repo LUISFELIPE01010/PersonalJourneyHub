@@ -1,0 +1,67 @@
+PERSONAL JUNIOR NOBREGA
+SEÇÃO 1 – HERO (ABERTURA)
++100 alunos já transformam suas vidas!
+Agora é a sua vez.
+
+Treine com Junior Nobrega
+Personal trainer especializado em transformar saúde, corpo e mente com treinos personalizados para você.
+
+Quero treinar com você
+
+SEÇÃO 2 – SOBRE O PERSONAL
+Quem é Junior Nobrega
+
+Junior Nobrega é personal trainer, formado em Educação Física, com foco em transformar vidas por meio da atividade física.
+
+Apaixonado por saúde, bem-estar e performance, Junior atua com um atendimento próximo e motivador, construindo resultados reais para quem busca emagrecer, ganhar massa muscular ou melhorar o condicionamento físico.
+
+Diferenciais:
+
+Treinos adaptados para cada aluno
+
+Suporte e acompanhamento constante
+
+Foco em resultado sem fórmulas mágicas
+
+Motivação e disciplina para você sair da zona de conforto
+
+SEÇÃO 3 – BENEFÍCIOS
+O que você ganha treinando com Junior Nobrega?
+
+Emagrecimento eficaz
+Reduza gordura corporal com treinos personalizados, nutrição estratégica e disciplina.
+
+Hipertrofia com segurança
+Aumente sua massa muscular com metodologia segura, progressiva e motivadora.
+
+Motivação para sair da zona de conforto
+Mais do que treinar, você aprende a manter o foco e a energia para não desistir.
+
+SEÇÃO 4 – PROVA SOCIAL (OPCIONAL)
+Mais de 100 alunos já treinam com Junior e comprovam resultados reais.
+
+"Com o Junior eu consegui emagrecer 12kg em 4 meses, ganhei autoestima e disposição pra tudo. O treino é pesado, mas vale a pena!"
+— Luciana M., 36 anos
+
+SEÇÃO 5 – CHAMADA FINAL
+Está pronto para mudar sua vida com treinos de verdade?
+
+Comece hoje. Sem enrolação, sem fórmula mágica.
+Com treino, acompanhamento e motivação, o resultado vem.
+
+Fale comigo no WhatsApp agora
+
+ORIENTAÇÃO VISUAL (SE FOR USAR EM HTML/CSS OU CONSTRUTOR)
+Cores:
+
+Fundo: branco (#ffffff)
+
+Texto: preto (#000000)
+
+Botões e destaques: vermelho (#e10600)
+
+Secundário: cinza claro (#f5f5f5 ou #eeeeee)
+
+Fonte sugerida: Inter, Poppins ou Montserrat
+Layout: Página única, com rolagem fluida, botão de WhatsApp fixo no topo ou repetido ao final.
+
