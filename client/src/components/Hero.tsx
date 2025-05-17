@@ -1,4 +1,5 @@
 import { Button } from "./ui/button";
+import CountUp from "react-countup";
 
 const Hero = () => {
   const scrollToContact = () => {
@@ -14,7 +15,7 @@ const Hero = () => {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-10 md:mb-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-              <span className="block">+100 alunos já</span>
+              <span className="block">+<CountUp end={100} duration={2.5} /> alunos já</span>
               <span className="block text-primary">transformam suas vidas!</span>
               <span className="block mt-2">Agora é a sua vez.</span>
             </h1>
