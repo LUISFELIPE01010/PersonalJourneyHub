@@ -6,6 +6,7 @@ import Benefits from "../components/Benefits";
 import Testimonials from "../components/Testimonials";
 import Gallery from "../components/Gallery";
 import CallToAction from "../components/CallToAction";
+import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
 
@@ -48,6 +49,7 @@ export default function Home() {
       <Benefits />
       <Testimonials />
       <Gallery />
+      <Contact />
       <CallToAction />
       <Footer />
       <WhatsAppButton />

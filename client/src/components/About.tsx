@@ -27,9 +27,9 @@ const About = () => {
         <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-16">
           <div className="md:w-2/5">
             <img 
-              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=1000" 
+              src="/fotojunior.png" 
               alt="Junior Nobrega, Personal Trainer" 
-              className="rounded-xl shadow-lg w-full h-auto object-cover" 
+              className="rounded-xl shadow-lg w-full h-auto object-cover max-w-md mx-auto" 
             />
           </div>
           

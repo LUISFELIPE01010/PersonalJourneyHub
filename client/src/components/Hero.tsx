@@ -30,11 +30,11 @@ const Hero = () => {
               Quero treinar com você
             </Button>
           </div>
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 flex justify-center">
             <img 
               src="/foto.png" 
               alt="Personal trainer Junior Nobrega" 
-              className="rounded-xl shadow-lg w-full h-auto object-cover" 
+              className="rounded-xl shadow-lg w-80 h-80 md:w-96 md:h-96 object-cover" 
             />
           </div>
         </div>
