@@ -49,7 +49,6 @@ export default function Home() {
       <Benefits />
       <Testimonials />
       <Gallery />
-      <Contact />
       <CallToAction />
       <Footer />
       <WhatsAppButton />
