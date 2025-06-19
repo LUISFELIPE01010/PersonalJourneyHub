@@ -34,7 +34,7 @@ const Hero = () => {
             <img 
               src="/foto.png" 
               alt="Personal trainer Junior Nobrega" 
-              className="rounded-xl shadow-lg w-80 h-80 md:w-96 md:h-96 object-cover" 
+              className="rounded-xl shadow-lg w-96 h-96 md:w-[28rem] md:h-[28rem] object-cover" 
             />
           </div>
         </div>
