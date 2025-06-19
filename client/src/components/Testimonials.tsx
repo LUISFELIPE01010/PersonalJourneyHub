@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { Star } from "lucide-react";
 
 type Testimonial = {
   id: number;
@@ -135,24 +135,6 @@ const Testimonials = () => {
               ))}
             </div>
           </div>
-          
-          <Button 
-            variant="outline"
-            size="icon"
-            className="absolute top-1/2 left-0 -translate-y-1/2 bg-white shadow-lg rounded-full z-10 text-primary hover:bg-white hover:text-primary"
-            onClick={prevSlide}
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </Button>
-          
-          <Button 
-            variant="outline"
-            size="icon"
-            className="absolute top-1/2 right-0 -translate-y-1/2 bg-white shadow-lg rounded-full z-10 text-primary hover:bg-white hover:text-primary"
-            onClick={nextSlide}
-          >
-            <ChevronRight className="h-6 w-6" />
-          </Button>
         </div>
         
         <div className="mt-12 flex justify-center">
