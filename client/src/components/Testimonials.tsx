@@ -7,8 +7,7 @@ type Testimonial = {
   id: number;
   name: string;
   age: string;
-  beforeImage: string;
-  afterImage: string;
+  image: string;
   text: string;
 };
 
@@ -17,24 +16,21 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: "Roberta Souza",
     age: "36 anos",
-    beforeImage: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    afterImage: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+    image: "/roberta.png",
     text: "Com o Junior eu consegui emagrecer 12kg em 4 meses, ganhei autoestima e disposição pra tudo. O treino é pesado, mas vale a pena!"
   },
   {
     id: 2,
     name: "Caio Lima",
     age: "28 anos",
-    beforeImage: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    afterImage: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+    image: "/caio.png",
     text: "Treino com o Junior há 8 meses e ganhei 7kg de massa muscular. Ele me ensinou como treinar de forma correta e como manter disciplina."
   },
   {
     id: 3,
     name: "Leticia Silva",
     age: "42 anos",
-    beforeImage: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    afterImage: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+    image: "/leticia.png",
     text: "Comecei a treinar para melhorar minha saúde. O Junior adaptou tudo para minha condição física e hoje tenho muito mais disposição e qualidade de vida."
   }
 ];
@@ -46,21 +42,12 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
         <h4 className="font-bold text-lg">{testimonial.name}</h4>
         <p className="text-sm text-gray-600 mb-4">{testimonial.age}</p>
         
-        <div className="flex gap-2 mb-4">
-          <div className="flex-1">
-            <img 
-              src={testimonial.beforeImage} 
-              alt={`${testimonial.name} - antes`} 
-              className="w-full h-48 object-cover rounded-lg" 
-            />
-          </div>
-          <div className="flex-1">
-            <img 
-              src={testimonial.afterImage} 
-              alt={`${testimonial.name} - depois`} 
-              className="w-full h-48 object-cover rounded-lg" 
-            />
-          </div>
+        <div className="mb-4">
+          <img 
+            src={testimonial.image} 
+            alt={testimonial.name} 
+            className="w-full h-64 object-cover rounded-lg" 
+          />
         </div>
       </div>
       
