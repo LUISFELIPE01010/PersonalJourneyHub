@@ -1,4 +1,4 @@
-import { FaInstagram, FaFacebook, FaYoutube, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaYoutube, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -12,28 +12,25 @@ const Footer = () => {
           
           <div className="flex space-x-6">
             <a 
-              href="#" 
+              href="https://instagram.com/personaljuniornobrega" 
               className="text-white hover:text-primary transition"
               aria-label="Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <FaInstagram className="text-2xl" />
             </a>
             <a 
-              href="#" 
-              className="text-white hover:text-primary transition"
-              aria-label="Facebook"
-            >
-              <FaFacebook className="text-2xl" />
-            </a>
-            <a 
-              href="#" 
+              href="https://www.youtube.com/channel/UCvPuoAmYTM6UC6gvcVn0K_Q" 
               className="text-white hover:text-primary transition"
               aria-label="YouTube"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <FaYoutube className="text-2xl" />
             </a>
             <a 
-              href="https://wa.me/5500000000000" 
+              href="https://wa.me/5513997676164" 
               className="text-white hover:text-primary transition"
               aria-label="WhatsApp"
               target="_blank"
