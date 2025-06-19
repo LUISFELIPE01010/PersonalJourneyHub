@@ -64,12 +64,6 @@ const Header = () => {
           >
             Depoimentos
           </button>
-          <button 
-            onClick={() => scrollToSection("contato")}
-            className="font-medium hover:text-primary transition"
-          >
-            Contato
-          </button>
         </nav>
 
         <a
@@ -113,12 +107,6 @@ const Header = () => {
               className="font-medium hover:text-primary transition"
             >
               Depoimentos
-            </button>
-            <button
-              onClick={() => scrollToSection("contato")}
-              className="font-medium hover:text-primary transition"
-            >
-              Contato
             </button>
           </nav>
         </div>
