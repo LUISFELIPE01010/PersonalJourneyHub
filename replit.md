@@ -1,124 +1,91 @@
-# Personal Trainer Junior Nobrega Website
+# Replit Development Guide
 
 ## Overview
 
-This is a modern, responsive personal trainer website for Junior Nobrega, built with a React frontend and Express backend stack. The site features a clean, professional design focused on converting visitors into clients through strategic call-to-actions and testimonials.
+This is a personal trainer landing page application built with React, TypeScript, and Express.js. The application showcases Junior Nobrega's personal training services with sections for testimonials, benefits, quiz functionality, and contact information. It uses a modern tech stack with Tailwind CSS for styling and shadcn/ui components for a professional look.
 
 ## System Architecture
 
-### Frontend Architecture
-- **Framework**: React 18 with TypeScript
+The application follows a full-stack monorepo structure with:
+
+- **Frontend**: React with TypeScript, built with Vite
+- **Backend**: Express.js with TypeScript
+- **Database**: PostgreSQL with Drizzle ORM (configured but using in-memory storage currently)
 - **Styling**: Tailwind CSS with shadcn/ui components
-- **Build Tool**: Vite
-- **Routing**: Wouter (lightweight React router)
-- **State Management**: TanStack Query for server state
-- **UI Components**: Radix UI primitives with custom styling
-
-### Backend Architecture
-- **Runtime**: Node.js with Express
-- **Language**: TypeScript
-- **Database**: PostgreSQL with Drizzle ORM
-- **Session Management**: express-session with PostgreSQL store
-- **Development**: Hot module replacement via Vite integration
-
-### Design System
-- **Primary Color**: #e10600 (vibrant red)
-- **Typography**: Inter font family
-- **Components**: Consistent shadcn/ui component library
-- **Responsive**: Mobile-first approach with Tailwind breakpoints
+- **Build System**: Vite for frontend, esbuild for backend
 
 ## Key Components
 
-### Landing Page Sections
-1. **Header**: Fixed navigation with mobile menu and WhatsApp CTA
-2. **Hero**: Animated counter showing 100+ students with main CTA
-3. **About**: Personal trainer biography with feature highlights
-4. **Benefits**: Three-column grid showcasing training benefits
-5. **Quiz**: Interactive quiz to determine ideal training program
-6. **Testimonials**: Carousel with client success stories - fully responsive
-7. **Instagram Videos**: Carousel showcasing training tips in social media format
-8. **Gallery**: Image showcase of training sessions
-9. **Call-to-Action**: Direct WhatsApp contact integration
-10. **Footer**: Social media links and contact information
+### Frontend Architecture
+- **React Router**: Using Wouter for client-side routing
+- **State Management**: React Query for server state management
+- **UI Components**: shadcn/ui component library with Radix UI primitives
+- **Styling**: Tailwind CSS with custom design system
+- **Animations**: CSS transitions and intersection observer for scroll animations
 
-### Interactive Features
-- Smooth scroll navigation between sections
-- Intersection Observer for fade-in animations
-- Mobile-responsive hamburger menu
-- Testimonial carousel with navigation controls
-- WhatsApp integration for lead generation
+### Backend Architecture
+- **Express Server**: RESTful API structure (routes not yet implemented)
+- **Database Layer**: Drizzle ORM with PostgreSQL schema
+- **Storage Interface**: Abstract storage layer with in-memory implementation
+- **Development Setup**: Hot reloading with Vite integration
 
-### UI Components
-- Responsive card layouts
-- Button variants (primary, secondary, ghost)
-- Sheet component for mobile navigation
-- Toast notifications system
-- Progress indicators and animations
+### UI/UX Features
+- **Responsive Design**: Mobile-first approach with breakpoint-specific layouts
+- **Interactive Elements**: Quiz component, testimonial carousel, image galleries
+- **Performance**: Lazy loading, smooth scrolling, optimized images
+- **Accessibility**: Semantic HTML, ARIA labels, keyboard navigation
 
 ## Data Flow
 
-### Frontend Data Management
-- React Query for API state management
-- Local state for UI interactions (menu toggles, carousel position)
-- Intersection Observer API for scroll-based animations
-- Form handling with controlled components
-
-### Backend API Structure
-- RESTful API endpoints under `/api` prefix
-- Express middleware for request logging and error handling
-- Session-based authentication ready (currently using memory storage)
-- CRUD operations through storage interface
-
-### Database Schema
-- User management schema with Drizzle ORM
-- PostgreSQL as primary database
-- Migration system with drizzle-kit
-- Type-safe database operations
+1. **Client Request**: React components make API calls through React Query
+2. **Server Processing**: Express routes handle requests and interact with storage layer
+3. **Data Storage**: Currently using in-memory storage, configured for PostgreSQL
+4. **Response**: JSON responses sent back to client components
+5. **UI Updates**: React Query manages caching and component re-renders
 
 ## External Dependencies
 
-### Core Dependencies
-- **React Ecosystem**: React 18, React DOM, React Router (Wouter)
-- **UI Framework**: Tailwind CSS, Radix UI, shadcn/ui
-- **Backend**: Express, Drizzle ORM, Neon Database
-- **Development**: Vite, TypeScript, ESBuild
+### Production Dependencies
+- **@radix-ui/***: Unstyled, accessible UI primitives
+- **@tanstack/react-query**: Server state management
+- **drizzle-orm**: Type-safe ORM for database operations
+- **@neondatabase/serverless**: Serverless PostgreSQL driver
+- **react-countup**: Animated number counting
+- **react-icons**: Icon library with multiple icon sets
+- **embla-carousel-react**: Carousel/slider functionality
 
-### Third-party Integrations
-- **WhatsApp Business API**: Direct messaging integration
-- **Font Loading**: Google Fonts (Inter)
-- **Icons**: Lucide React, React Icons
-- **Animations**: CountUp.js for number animations
+### Development Dependencies
+- **Vite**: Build tool and development server
+- **TypeScript**: Type checking and compilation
+- **Tailwind CSS**: Utility-first CSS framework
+- **PostCSS & Autoprefixer**: CSS processing
 
-### Development Tools
-- **Hot Reload**: Vite dev server with HMR
-- **Type Checking**: TypeScript with strict mode
-- **Linting**: ESLint configuration
-- **Build**: Vite for frontend, ESBuild for backend
+### Third-party Services
+- **WhatsApp Integration**: Direct links for customer communication
+- **Image Hosting**: Unsplash and local assets for testimonials/gallery
+- **Font Loading**: Google Fonts (Inter family)
 
 ## Deployment Strategy
 
+### Development Environment
+- **Replit Integration**: Configured for Replit's development environment
+- **Hot Reloading**: Vite dev server with HMR enabled
+- **Port Configuration**: Server runs on port 5000, mapped to external port 80
+
 ### Production Build
-- Frontend: Vite build to `dist/public`
-- Backend: ESBuild bundle to `dist/index.js`
-- Static assets served from build directory
+- **Frontend**: Vite builds optimized static assets to `dist/public`
+- **Backend**: esbuild compiles TypeScript server to `dist/index.js`
+- **Static Serving**: Express serves built frontend in production
 
-### Hosting Configuration
-- **Platform**: Replit with autoscale deployment
-- **Port**: 5000 (mapped to port 80 externally)
-- **Environment**: Node.js 20 runtime
-- **Database**: Neon PostgreSQL serverless
-
-### Development Workflow
-- Local development with `npm run dev`
-- Database migrations with `npm run db:push`
-- Type checking with `npm run check`
-- Production build with `npm run build`
+### Environment Configuration
+- **Database**: Requires `DATABASE_URL` environment variable for PostgreSQL
+- **Build Process**: Separate build commands for frontend and backend
+- **Deployment Target**: Configured for autoscale deployment on Replit
 
 ## Changelog
 
 Changelog:
 - June 23, 2025. Initial setup
-- June 23, 2025. Migração completa para Replit - Adicionado Quiz moderno interativo, seção de vídeos do Instagram em carrossel, corrigidos problemas de responsividade e piscar da tela
 
 ## User Preferences
 
