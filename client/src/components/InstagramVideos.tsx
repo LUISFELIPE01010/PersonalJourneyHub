@@ -14,41 +14,48 @@ type InstagramPost = {
 const instagramPosts: InstagramPost[] = [
   {
     id: 1,
+    title: "Novo Treino",
+    description: "Últimas técnicas e dicas de treino para máximos resultados",
+    embedUrl: "https://www.instagram.com/reel/DIJQ0fGRdrn/",
+    postId: "DIJQ0fGRdrn"
+  },
+  {
+    id: 2,
     title: "Treino de Hipertrofia",
     description: "Técnicas avançadas para maximizar o ganho de massa muscular",
     embedUrl: "https://www.instagram.com/reel/DLQeuVtR_Q2/",
     postId: "DLQeuVtR_Q2"
   },
   {
-    id: 2,
+    id: 3,
     title: "Exercícios Funcionais",
     description: "Movimentos que melhoram sua performance no dia a dia",
     embedUrl: "https://www.instagram.com/reel/DK1_ghhx8os/",
     postId: "DK1_ghhx8os"
   },
   {
-    id: 3,
+    id: 4,
     title: "Técnicas de Treino",
     description: "Como executar exercícios com perfeição e segurança",
     embedUrl: "https://www.instagram.com/reel/DJ7eGe6RfJ0/",
     postId: "DJ7eGe6RfJ0"
   },
   {
-    id: 4,
+    id: 5,
     title: "Força e Resistência",
     description: "Estratégias para desenvolver força e resistência muscular",
     embedUrl: "https://www.instagram.com/reel/DJRgWs6xmxD/",
     postId: "DJRgWs6xmxD"
   },
   {
-    id: 5,
+    id: 6,
     title: "Condicionamento Físico",
     description: "Exercícios para melhorar seu condicionamento geral",
     embedUrl: "https://www.instagram.com/reel/DIzLyKdx5h2/",
     postId: "DIzLyKdx5h2"
   },
   {
-    id: 6,
+    id: 7,
     title: "Performance Avançada",
     description: "Dicas avançadas para atletas e praticantes experientes",
     embedUrl: "https://www.instagram.com/reel/DHv96xnR4Ud/",
