@@ -10,7 +10,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="pt-24 md:pt-32 lg:pt-36 pb-16 md:pb-20 lg:pb-24">
+    <section id="hero" className="pt-24 md:pt-32 lg:pt-36 pb-16 md:pb-20 lg:pb-24 bg-gradient-to-br from-gray-50 via-white to-gray-100">
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           <div className="lg:w-1/2 text-center lg:text-left">
