@@ -42,7 +42,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-gray-800 text-center text-xs md:text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Junior Nobrega Personal Trainer. Todos os direitos reservados.</p>
+          <p>&copy; Junior Nobrega Personal Trainer. Todos os direitos reservados.</p>
           <p className="mt-2 text-sm">CREF 176473-G/SP</p>
         </div>
       </div>
