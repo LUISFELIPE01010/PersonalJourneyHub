@@ -131,8 +131,8 @@ const InstagramVideos = () => {
   const [slidesToShow, setSlidesToShow] = useState(4);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef<number>(0);
-  const touchEndX = useRef<number>(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -166,31 +166,63 @@ const InstagramVideos = () => {
   };
 
   const nextSlide = () => {
-    goToSlide(currentIndex + 1);
+    if (currentIndex < maxIndex) {
+      goToSlide(currentIndex + 1);
+    }
   };
 
   const prevSlide = () => {
-    goToSlide(currentIndex - 1);
+    if (currentIndex > 0) {
+      goToSlide(currentIndex - 1);
+    }
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+    try {
+      if (e.touches && e.touches.length > 0 && e.touches[0]) {
+        touchStartX.current = e.touches[0].clientX;
+      }
+    } catch (error) {
+      // Safely handle any touch errors
+      touchStartX.current = null;
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
+    try {
+      if (e.touches && e.touches.length > 0 && e.touches[0]) {
+        touchEndX.current = e.touches[0].clientX;
+      }
+    } catch (error) {
+      // Safely handle any touch errors
+      touchEndX.current = null;
+    }
   };
 
   const handleTouchEnd = () => {
-    if (touchStartX.current - touchEndX.current > 50) {
-      nextSlide();
-    } else if (touchEndX.current - touchStartX.current > 50) {
-      prevSlide();
+    try {
+      if (touchStartX.current === null || touchEndX.current === null) return;
+      
+      const distance = touchStartX.current - touchEndX.current;
+      const isLeftSwipe = distance > 50;
+      const isRightSwipe = distance < -50;
+
+      if (isLeftSwipe && currentIndex < maxIndex) {
+        nextSlide();
+      } else if (isRightSwipe && currentIndex > 0) {
+        prevSlide();
+      }
+    } catch (error) {
+      // Safely handle any touch errors
+    } finally {
+      // Reset touch values
+      touchStartX.current = null;
+      touchEndX.current = null;
     }
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-pink-50 via-white to-yellow-50 section-fade">
+    <section className="py-20 bg-gradient-to-br from-white to-gray-100 section-fade">
       <div className="container-custom">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -235,12 +267,7 @@ const InstagramVideos = () => {
           </Button>
 
           {/* Video Carousel */}
-          <div 
-            className="overflow-hidden"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+          <div className="overflow-hidden">
             <div 
               ref={sliderRef}
               className="flex transition-transform duration-300 ease-out"
@@ -248,6 +275,9 @@ const InstagramVideos = () => {
                 transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
                 width: `${(instagramVideos.length / slidesToShow) * 100}%`
               }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               {instagramVideos.map((video) => (
                 <div 
