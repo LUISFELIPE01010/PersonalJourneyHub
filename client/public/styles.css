@@ -15,22 +15,6 @@ body {
     color: #333;
     background-color: #f5f5f5;
     overflow-x: hidden;
-    opacity: 1;
-    transition: opacity 0.2s ease;
-    will-change: opacity;
-}
-
-/* Preloader para evitar flash */
-body.loading {
-    opacity: 0;
-}
-
-/* Garantir que imagens não causem layout shift */
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    will-change: transform;
 }
 
 .container {
@@ -765,16 +749,10 @@ img {
 }
 
 /* Depoimentos Section */
-.depoimentos {
-    padding: 80px 0 120px;
-    background: #f9f9f9;
-}
-
 .testimonials-container {
     position: relative;
     max-width: 1000px;
     margin: 0 auto;
-    padding-bottom: 80px;
 }
 
 .testimonials-wrapper {
@@ -899,171 +877,6 @@ img {
     margin-top: 20px;
     color: #888;
     font-size: 0.9rem;
-}
-
-/* Videos Section */
-.videos {
-    background: #f8f8f8;
-    padding: 80px 0;
-}
-
-.videos-container {
-    position: relative;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.videos-wrapper {
-    display: flex;
-    gap: 25px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 20px 0 40px;
-}
-
-.videos-wrapper::-webkit-scrollbar {
-    display: none;
-}
-
-.video-card {
-    flex: 0 0 280px;
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    scroll-snap-align: start;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.video-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-}
-
-.video-thumbnail {
-    position: relative;
-    width: 100%;
-    height: 350px;
-    overflow: hidden;
-}
-
-.video-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.video-card:hover .video-thumbnail img {
-    transform: scale(1.05);
-}
-
-.play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: rgba(225, 6, 0, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.video-card:hover .play-button {
-    background: rgba(225, 6, 0, 1);
-    transform: translate(-50%, -50%) scale(1.1);
-}
-
-.instagram-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    color: white;
-    padding: 8px;
-    border-radius: 12px;
-    font-size: 1rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.video-content {
-    padding: 20px;
-}
-
-.video-content h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #222;
-    line-height: 1.3;
-}
-
-.video-content p {
-    color: #666;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin-bottom: 15px;
-}
-
-.video-stats {
-    display: flex;
-    gap: 20px;
-    color: #888;
-    font-size: 0.85rem;
-}
-
-.video-stats span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.video-stats i {
-    color: #e10600;
-}
-
-.videos-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.videos-footer {
-    text-align: center;
-    margin-top: 40px;
-}
-
-.btn-instagram {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 30px;
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    color: white;
-    text-decoration: none;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(225, 6, 0, 0.3);
-}
-
-.btn-instagram:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(225, 6, 0, 0.4);
-    color: white;
-    text-decoration: none;
 }
 
 /* Contato Section */
@@ -1456,25 +1269,6 @@ img {
     }
 }
 
-@media (max-width: 768px) {
-    .video-card {
-        flex: 0 0 260px;
-    }
-    
-    .video-thumbnail {
-        height: 320px;
-    }
-    
-    .videos-nav {
-        margin-top: 20px;
-    }
-    
-    .btn-instagram {
-        padding: 12px 24px;
-        font-size: 0.9rem;
-    }
-}
-
 @media (max-width: 480px) {
     .hero-title {
         font-size: 2rem;
@@ -1496,31 +1290,6 @@ img {
     
     .quiz-container {
         padding: 25px 15px;
-    }
-    
-    .video-card {
-        flex: 0 0 240px;
-    }
-    
-    .video-thumbnail {
-        height: 300px;
-    }
-    
-    .video-content {
-        padding: 15px;
-    }
-    
-    .video-content h4 {
-        font-size: 1rem;
-    }
-    
-    .video-content p {
-        font-size: 0.85rem;
-    }
-    
-    .btn-instagram {
-        padding: 10px 20px;
-        font-size: 0.85rem;
     }
 }
 

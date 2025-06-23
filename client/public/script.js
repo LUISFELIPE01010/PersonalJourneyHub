@@ -247,8 +247,9 @@ function initQuiz() {
         {
             question: "Onde prefere treinar?",
             options: [
-                { text: "Academia (Ironberg Alphaville)", value: "academia" },
-                { text: "Condomínio ou residência", value: "condominio" }
+                { text: "Academia", value: "academia" },
+                { text: "Condomínio", value: "condominio" },
+                { text: "Ao ar livre", value: "ar_livre" }
             ]
         },
         {
@@ -394,9 +395,11 @@ function initQuiz() {
         
         let localText = "";
         if (local === "academia") {
-            localText = "Ironberg Alphaville - Academia completa com equipamentos modernos";
+            localText = "Ironberg Alphaville";
+        } else if (local === "condominio") {
+            localText = "No seu condomínio";
         } else {
-            localText = "No seu condomínio ou residência - Flexibilidade total de horários";
+            localText = "Treinos ao ar livre";
         }
         
         whatsappMessage += ` no formato ${formatText.toLowerCase()}.`;
@@ -509,208 +512,15 @@ function debounce(func, wait) {
     };
 }
 
-// Videos Carousel Functionality
-function initVideos() {
-    const videosWrapper = document.getElementById('videosWrapper');
-    const videosPrevBtn = document.getElementById('videosPrevBtn');
-    const videosNextBtn = document.getElementById('videosNextBtn');
-    const videosDotsContainer = document.getElementById('videosDotsContainer');
-    
-    if (!videosWrapper) return;
-    
-    const videoCards = videosWrapper.querySelectorAll('.video-card');
-    let currentVideoIndex = 0;
-    let startX = 0;
-    let endX = 0;
-    
-    function getVideoCardsToShow() {
-        const width = window.innerWidth;
-        if (width < 768) return 1;
-        if (width < 1024) return 2;
-        return 3;
-    }
-    
-    function createVideoDots() {
-        if (!videosDotsContainer) return;
-        
-        videosDotsContainer.innerHTML = '';
-        const cardsToShow = getVideoCardsToShow();
-        const maxIndex = Math.max(0, videoCards.length - cardsToShow);
-        
-        for (let i = 0; i <= maxIndex; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            if (i === currentVideoIndex) dot.classList.add('active');
-            dot.addEventListener('click', () => goToVideoSlide(i));
-            videosDotsContainer.appendChild(dot);
-        }
-    }
-    
-    function navigateVideos(direction) {
-        const cardsToShow = getVideoCardsToShow();
-        const maxIndex = Math.max(0, videoCards.length - cardsToShow);
-        
-        currentVideoIndex += direction;
-        if (currentVideoIndex < 0) currentVideoIndex = 0;
-        if (currentVideoIndex > maxIndex) currentVideoIndex = maxIndex;
-        
-        updateVideoCarousel();
-    }
-    
-    function goToVideoSlide(index) {
-        const cardsToShow = getVideoCardsToShow();
-        const maxIndex = Math.max(0, videoCards.length - cardsToShow);
-        
-        currentVideoIndex = Math.min(index, maxIndex);
-        updateVideoCarousel();
-    }
-    
-    function updateVideoCarousel() {
-        const cardWidth = 280;
-        const gap = 25;
-        const scrollAmount = currentVideoIndex * (cardWidth + gap);
-        
-        videosWrapper.scrollTo({
-            left: scrollAmount,
-            behavior: 'smooth'
-        });
-        
-        // Update dots
-        const dots = videosDotsContainer?.querySelectorAll('.dot');
-        dots?.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentVideoIndex);
-        });
-        
-        // Update navigation buttons
-        const cardsToShow = getVideoCardsToShow();
-        const maxIndex = Math.max(0, videoCards.length - cardsToShow);
-        
-        if (videosPrevBtn) videosPrevBtn.disabled = currentVideoIndex === 0;
-        if (videosNextBtn) videosNextBtn.disabled = currentVideoIndex >= maxIndex;
-    }
-    
-    function handleVideoSwipe() {
-        const threshold = 50;
-        const diff = startX - endX;
-        
-        if (Math.abs(diff) > threshold) {
-            if (diff > 0) {
-                navigateVideos(1);
-            } else {
-                navigateVideos(-1);
-            }
-        }
-    }
-    
-    // Event listeners
-    if (videosPrevBtn) {
-        videosPrevBtn.addEventListener('click', () => navigateVideos(-1));
-    }
-    if (videosNextBtn) {
-        videosNextBtn.addEventListener('click', () => navigateVideos(1));
-    }
-    
-    // Touch events for mobile swipe
-    videosWrapper.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-    });
-    
-    videosWrapper.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
-        handleVideoSwipe();
-    });
-    
-    // Add click handlers to video cards
-    videoCards.forEach(card => {
-        card.addEventListener('click', () => {
-            window.open('https://instagram.com/personaljuniornobrega', '_blank');
-        });
-    });
-    
-    // Initial setup
-    createVideoDots();
-    updateVideoCarousel();
-}
-
 // Performance optimizations
 window.addEventListener('resize', debounce(() => {
     // Recalculate layouts if needed
     const testimonialsWrapper = document.getElementById('testimonialsWrapper');
     if (testimonialsWrapper) {
+        // Trigger testimonials update
         testimonialsWrapper.dispatchEvent(new Event('resize'));
     }
-    
-    // Update videos carousel on resize
-    const videosWrapper = document.getElementById('videosWrapper');
-    if (videosWrapper) {
-        initVideos();
-    }
 }, 250));
-
-// Inicialização principal
-document.addEventListener('DOMContentLoaded', function() {
-    // Remove loading class para evitar piscada
-    setTimeout(() => {
-        document.body.classList.remove('loading');
-    }, 100);
-    
-    initCountUp();
-    initTestimonials();
-    initVideos();
-    initQuiz();
-    initScrollAnimations();
-    
-    // Smooth scroll para navegação
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-                
-                // Fechar menu mobile se aberto
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuToggle = document.getElementById('menuToggle');
-                if (mobileMenu && mobileMenu.classList.contains('active')) {
-                    mobileMenu.classList.remove('active');
-                    menuToggle.classList.remove('active');
-                }
-            }
-        });
-    });
-    
-    // Menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    
-    if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        });
-    }
-    
-    // Fechar menu ao clicar fora
-    document.addEventListener('click', function(event) {
-        if (mobileMenu && !mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-            mobileMenu.classList.remove('active');
-            menuToggle.classList.remove('active');
-        }
-    });
-    
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
-        const header = document.getElementById('header');
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-});
 
 // Lazy loading for images
 if ('IntersectionObserver' in window) {
