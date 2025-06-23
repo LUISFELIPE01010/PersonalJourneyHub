@@ -82,13 +82,22 @@ const InstagramPostCard = ({ post }: { post: InstagramPost }) => {
           </p>
         </div>
         
-        <div className="bg-gray-50 rounded-xl p-4 mb-4">
+        <div className="bg-gray-50 rounded-xl p-4 mb-4 relative group">
           <div 
             className={`instagram-embed-container transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             style={{ minHeight: '400px' }}
           >
+            {/* Play indicator overlay */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 opacity-80 group-hover:opacity-100 transition-opacity">
+              <div className="bg-black/20 rounded-full p-4 backdrop-blur-sm">
+                <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </div>
+            </div>
+            
             <blockquote 
-              className="instagram-media" 
+              className="instagram-media cursor-pointer hover:scale-[1.02] transition-transform duration-200" 
               data-instgrm-permalink={`${post.embedUrl}?utm_source=ig_embed&utm_campaign=loading`}
               data-instgrm-version="14" 
               style={{
@@ -295,7 +304,7 @@ const InstagramVideos = () => {
           </h2>
           <div className="w-20 h-1 bg-red-600 mx-auto mb-6"></div>
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-            Acompanhe nossos vídeos com dicas práticas, exercícios e técnicas para maximizar seus resultados
+            Clique nos vídeos para assistir dicas práticas, exercícios e técnicas para maximizar seus resultados
           </p>
           <a 
             href="https://instagram.com/personaljuniornobrega" 
