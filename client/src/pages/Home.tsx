@@ -5,6 +5,8 @@ import About from "../components/About";
 import Benefits from "../components/Benefits";
 import Testimonials from "../components/Testimonials";
 import Gallery from "../components/Gallery";
+import Quiz from "../components/Quiz";
+import InstagramVideos from "../components/InstagramVideos";
 import CallToAction from "../components/CallToAction";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
@@ -42,12 +44,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-white text-black">
+    <div className="bg-white text-black min-h-screen">
       <Header />
       <Hero />
       <About />
       <Benefits />
+      <Quiz />
       <Testimonials />
+      <InstagramVideos />
       <Gallery />
       <CallToAction />
       <Footer />

@@ -32,17 +32,52 @@ html {
 body {
   font-family: 'Inter', sans-serif;
   @apply bg-background text-foreground;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Prevent flash of unstyled content */
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .section-fade {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
 }
 
 .section-fade.active {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Container improvements */
+.container-custom {
+  @apply mx-auto px-4 sm:px-6 lg:px-8;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* Section improvements */
+.section-title {
+  @apply text-3xl md:text-4xl font-bold text-center mb-4;
+}
+
+.section-divider {
+  @apply w-20 h-1 bg-primary mx-auto mb-6;
+}
+
+/* Button improvements */
+.btn-primary {
+  @apply bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl;
 }
 
 @layer base {

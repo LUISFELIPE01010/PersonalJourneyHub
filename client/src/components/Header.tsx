@@ -61,6 +61,12 @@ const Header = () => {
             Benefícios
           </button>
           <button 
+            onClick={() => scrollToSection("quiz")}
+            className="font-medium hover:text-primary transition"
+          >
+            Quiz
+          </button>
+          <button 
             onClick={() => scrollToSection("depoimentos")}
             className="font-medium hover:text-primary transition"
           >
@@ -117,6 +123,12 @@ const Header = () => {
                     className="block w-full text-left text-lg font-medium hover:text-primary transition py-2"
                   >
                     Benefícios
+                  </button>
+                  <button
+                    onClick={() => scrollToSection("quiz")}
+                    className="block w-full text-left text-lg font-medium hover:text-primary transition py-2"
+                  >
+                    Quiz
                   </button>
                   <button
                     onClick={() => scrollToSection("depoimentos")}

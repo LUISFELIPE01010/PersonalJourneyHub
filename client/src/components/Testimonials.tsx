@@ -166,7 +166,7 @@ const Testimonials = () => {
             <ChevronRight className="h-4 w-4" />
           </Button>
 
-          <div className="overflow-hidden px-4 md:px-12">
+          <div className="overflow-hidden px-2 md:px-8">
             <div 
               ref={sliderRef}
               className="flex transition-all duration-300 ease-in-out"

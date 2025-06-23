@@ -34,10 +34,12 @@ This is a modern, responsive personal trainer website for Junior Nobrega, built 
 2. **Hero**: Animated counter showing 100+ students with main CTA
 3. **About**: Personal trainer biography with feature highlights
 4. **Benefits**: Three-column grid showcasing training benefits
-5. **Testimonials**: Carousel with client success stories
-6. **Gallery**: Image showcase of training sessions
-7. **Call-to-Action**: Direct WhatsApp contact integration
-8. **Footer**: Social media links and contact information
+5. **Quiz**: Interactive quiz to determine ideal training program
+6. **Testimonials**: Carousel with client success stories - fully responsive
+7. **Instagram Videos**: Carousel showcasing training tips in social media format
+8. **Gallery**: Image showcase of training sessions
+9. **Call-to-Action**: Direct WhatsApp contact integration
+10. **Footer**: Social media links and contact information
 
 ### Interactive Features
 - Smooth scroll navigation between sections
@@ -116,6 +118,7 @@ This is a modern, responsive personal trainer website for Junior Nobrega, built 
 
 Changelog:
 - June 23, 2025. Initial setup
+- June 23, 2025. Migração completa para Replit - Adicionado Quiz moderno interativo, seção de vídeos do Instagram em carrossel, corrigidos problemas de responsividade e piscar da tela
 
 ## User Preferences
 
