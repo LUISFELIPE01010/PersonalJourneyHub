@@ -1,0 +1,114 @@
+Versão Mobile (responsivo)
+Na hero section, organize o conteúdo da seguinte forma:
+
+Exiba primeiro a imagem principal (pode ser do personal, treino, ou ambiente de academia).
+
+Abaixo da imagem, exiba os textos (headline, subtítulo e botão de chamada para ação).
+
+Garanta que o layout fique equilibrado visualmente em dispositivos móveis, com espaçamento adequado e bom aproveitamento de tela.
+
+Estrutura do Site (seções bem definidas e padronizadas)
+Hero Section
+
+Imagem de destaque com boa qualidade
+
+Headline de impacto (ex: “Alcance seus resultados com treinos sob medida”)
+
+Subtítulo explicativo
+
+Botão de chamada (ex: “Fale agora pelo WhatsApp”)
+
+Seção: Tipos de Aula
+
+Título: “Formatos de Treino”
+
+Criação de três blocos padronizados:
+
+Aulas Individuais (foco no acompanhamento 100% direcionado)
+
+Aulas em Dupla (interação, motivação e economia)
+
+Aulas em Grupo Pequeno (se for aplicável)
+
+Layout com ícones ou imagens temáticas e breve descrição em cada bloco
+
+Aplicar animações suaves de entrada (scroll reveal)
+
+Seção: Locais de Atendimento
+
+Título: “Locais onde atuo”
+
+Dois blocos principais:
+
+Ironberg Alphaville (incluir descrição do ambiente e vantagens)
+
+Condomínios (benefícios do atendimento em casa ou no espaço do prédio)
+
+Estilo visual limpo, mantendo coerência com o restante do layout
+
+Imagens reais ou estilizadas de cada local
+
+Seção: Quiz Interativo
+
+Título: “Qual treino combina com você?”
+
+Formato passo a passo, com animações entre perguntas
+
+Estilo moderno, com design de interface atrativo e funcional
+
+Exemplo de perguntas:
+
+Qual seu principal objetivo?
+
+Hipertrofia
+
+Emagrecimento
+
+Performance esportiva
+
+Qual seu nível de experiência?
+
+Iniciante
+
+Intermediário
+
+Avançado
+
+Onde prefere treinar?
+
+Academia
+
+Condomínio
+
+Outro
+
+Ao final:
+
+Exibir recomendação baseada nas respostas
+
+Incluir botão com link direto para o WhatsApp
+
+Incluir botão de “Reiniciar quiz”, que leva ao início da sequência
+
+Estilo Visual
+Fundo: Substituir o branco absoluto por tons claros de cinza suave (por exemplo: #f5f5f5, #eeeeee) para criar contraste entre seções.
+
+Paleta de cores: Utilizar cores secundárias com boa legibilidade e coerência com a identidade visual do personal.
+
+Tipografia: Moderna, clara, com tamanhos bem definidos e espaçamentos consistentes.
+
+Layout fluido: Utilizar grid e espaçamentos para manter organização visual em todas as resoluções.
+
+Animações e Interações
+Aplicar animações leves ao rolar a página (por exemplo: fade-in, slide-up)
+
+Transições suaves entre as seções e nas etapas do quiz
+
+Interações visuais em botões e seleções (hover, focus, active)
+
+Indicações visuais de progresso no quiz, se possível
+
+Considerações Técnicas
+O site deve ser leve e otimizado para carregamento rápido
+
+Responsividade obrigatória em todas as seções

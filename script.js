@@ -333,13 +333,23 @@ function initQuiz() {
         quizContainer.innerHTML = `
             <div class="quiz-result">
                 <h3>Sua recomendação personalizada</h3>
-                <p>${recommendation.text}</p>
-                <p><strong>Formato recomendado:</strong> ${recommendation.format}</p>
-                <p><strong>Local ideal:</strong> ${recommendation.local}</p>
+                <div class="recommendation-card">
+                    <p>${recommendation.text}</p>
+                </div>
+                
+                <div class="recommendation-card">
+                    <h4>Formato recomendado:</h4>
+                    <p>${recommendation.format}</p>
+                </div>
+                
+                <div class="recommendation-card">
+                    <h4>Local ideal:</h4>
+                    <p>${recommendation.local}</p>
+                </div>
                 
                 <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
                     <a href="https://wa.me/5513997676164?text=${encodeURIComponent(recommendation.whatsappMessage)}" 
-                       class="btn-primary" target="_blank">
+                       class="btn-primary" target="_blank" style="text-decoration: none;">
                         <i class="fab fa-whatsapp"></i>
                         Falar com Junior
                     </a>
@@ -433,11 +443,45 @@ function initScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in-up');
-                observer.unobserve(entry.target);
+                const element = entry.target;
+                
+                // Different animation types based on element
+                if (element.classList.contains('formato-card')) {
+                    element.classList.add('scale-in');
+                } else if (element.classList.contains('local-card')) {
+                    if (element.dataset.direction === 'left') {
+                        element.classList.add('fade-in-left');
+                    } else {
+                        element.classList.add('fade-in-right');
+                    }
+                } else if (element.classList.contains('diferencial-card')) {
+                    element.classList.add('fade-in-up');
+                } else {
+                    element.classList.add('fade-in-up');
+                }
+                
+                observer.unobserve(element);
             }
         });
     }, observerOptions);
+    
+    // Set up animation directions for local cards
+    const localCards = document.querySelectorAll('.local-card');
+    localCards.forEach((card, index) => {
+        card.dataset.direction = index % 2 === 0 ? 'left' : 'right';
+    });
+    
+    // Add stagger delays to formato cards
+    const formatoCards = document.querySelectorAll('.formato-card');
+    formatoCards.forEach((card, index) => {
+        card.classList.add(`stagger-${index + 1}`);
+    });
+    
+    // Add stagger delays to diferencial cards
+    const diferencialCards = document.querySelectorAll('.diferencial-card');
+    diferencialCards.forEach((card, index) => {
+        card.classList.add(`stagger-${(index % 4) + 1}`);
+    });
     
     // Observe elements for animation
     const animateElements = document.querySelectorAll([
@@ -446,7 +490,8 @@ function initScrollAnimations() {
         '.diferencial-card',
         '.testimonial-card',
         '.sobre-content',
-        '.section-header'
+        '.section-header',
+        '.quiz-container'
     ].join(','));
     
     animateElements.forEach(el => {
