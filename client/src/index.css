@@ -104,6 +104,17 @@ img {
   }
 }
 
+/* Instagram embeds responsive styling */
+.instagram-media {
+  max-width: 100% !important;
+  min-width: 280px !important;
+}
+
+/* Touch-friendly carousel */
+.touch-pan-x {
+  touch-action: pan-x;
+}
+
 /* Mobile-first responsive improvements */
 @media (max-width: 768px) {
   .section-fade {
@@ -114,6 +125,15 @@ img {
   button, .btn-primary, a[role="button"] {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Instagram section mobile optimization */
+  .instagram-embed-container {
+    min-height: 350px !important;
+  }
+
+  .instagram-media {
+    min-width: 260px !important;
   }
 }
 
