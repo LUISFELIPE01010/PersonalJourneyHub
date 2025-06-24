@@ -147,10 +147,12 @@ img {
   }
 }
 
-/* Instagram embeds responsive styling */
-.instagram-media {
-  max-width: 100% !important;
-  min-width: 280px !important;
+/* Video cards styling */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 /* Touch-friendly carousel */
@@ -170,26 +172,9 @@ img {
     min-width: 44px;
   }
 
-  /* Instagram section mobile optimization */
-  .instagram-embed-container {
-    min-height: 300px !important;
-  }
-
-  .instagram-media {
-    min-width: 280px !important;
-    max-width: 320px !important;
-  }
-}
-
-/* Ultra small mobile optimization */
-@media (max-width: 480px) {
-  .instagram-embed-container {
-    min-height: 280px !important;
-  }
-
-  .instagram-media {
-    min-width: 260px !important;
-    max-width: 300px !important;
+  /* Video section mobile optimization */
+  .aspect-video {
+    aspect-ratio: 16 / 9;
   }
 }
 
