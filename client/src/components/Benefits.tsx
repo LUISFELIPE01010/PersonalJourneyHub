@@ -42,8 +42,8 @@ const Benefits = () => {
           <div className="sm:col-span-2 lg:col-span-1 sm:mx-auto lg:mx-0 sm:max-w-sm lg:max-w-none">
             <BenefitCard 
               image="https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
-              title="Flexibilidade Total" 
-              description="Escolha o local que melhor se adapta à sua rotina. Treino onde você se sente mais confortável e motivado."
+              title="Treinamento Online" 
+              description="Treinos personalizados no conforto da sua casa! Acompanhamento em tempo real, correção de movimentos e toda atenção que você merece, onde quer que esteja."
             />
           </div>
         </div>
