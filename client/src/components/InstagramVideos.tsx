@@ -329,22 +329,7 @@ const InstagramVideos = () => {
             </div>
           </div>
 
-          {/* Dots Indicator - Mobile only */}
-          {maxIndex > 0 && (
-            <div className="flex justify-center mt-6 md:mt-8 space-x-1 md:space-x-2 md:hidden">
-              {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`rounded-full transition-all duration-200 ${
-                    index === currentIndex 
-                      ? 'bg-primary w-6 h-2' 
-                      : 'bg-gray-300 hover:bg-gray-400 w-2 h-2'
-                  }`}
-                />
-              ))}
-            </div>
-          )}
+          
 
           {/* Swipe hint for mobile */}
           <div className="md:hidden text-center mt-4">
