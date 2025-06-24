@@ -86,6 +86,12 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
         loop
         preload="metadata"
         onEnded={() => setIsPlaying(false)}
+        onLoadedData={() => {
+          // Generate thumbnail from first frame
+          if (videoRef.current && !isPlaying) {
+            videoRef.current.currentTime = 0.1;
+          }
+        }}
         style={{ backgroundColor: '#000' }}
       >
         <source src={video.videoUrl} type="video/mp4" />
@@ -134,6 +140,8 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
 const InstagramVideos = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(1);
+  const touchStartX = useRef<number>(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -163,6 +171,23 @@ const InstagramVideos = () => {
     setCurrentIndex(prev => Math.max(prev - 1, 0));
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const difference = touchStartX.current - touchEndX;
+
+    if (Math.abs(difference) > 50) {
+      if (difference > 0 && currentIndex < maxIndex) {
+        nextSlide();
+      } else if (difference < 0 && currentIndex > 0) {
+        prevSlide();
+      }
+    }
+  };
+
   return (
     <section className="py-16 bg-gradient-to-br from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4">
@@ -181,7 +206,7 @@ const InstagramVideos = () => {
           </a>
         </div>
 
-        {/* Desktop Navigation */}
+        {/* Navigation Buttons for Desktop */}
         {maxIndex > 0 && (
           <div className="hidden md:flex justify-center gap-4 mb-8">
             <Button
@@ -201,38 +226,40 @@ const InstagramVideos = () => {
           </div>
         )}
 
-        {/* Mobile: Simple Grid */}
-        <div className="md:hidden">
-          <div className="grid grid-cols-1 gap-6">
+        {/* Carousel for all devices */}
+        <div 
+          ref={carouselRef}
+          className="overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div 
+            className="flex gap-4 md:gap-6 transition-transform duration-300 ease-out px-4 md:px-0"
+            style={{
+              transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
+            }}
+          >
             {videoPosts.map((video) => (
-              <VideoCard 
-                key={video.id}
-                video={video} 
-              />
+              <div 
+                key={video.id} 
+                className="flex-shrink-0"
+                style={{ 
+                  width: slidesToShow === 1 
+                    ? `calc(100% - 2rem)` 
+                    : `calc(${100 / slidesToShow}% - 1.5rem)` 
+                }}
+              >
+                <VideoCard video={video} />
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Desktop: Carousel */}
-        <div className="hidden md:block">
-          <div className="overflow-hidden">
-            <div 
-              className="flex gap-6 transition-transform duration-300 ease-out"
-              style={{
-                transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
-              }}
-            >
-              {videoPosts.map((video) => (
-                <div 
-                  key={video.id} 
-                  className="flex-shrink-0"
-                  style={{ width: `calc(${100 / slidesToShow}% - 1.5rem)` }}
-                >
-                  <VideoCard video={video} />
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Mobile swipe hint */}
+        <div className="md:hidden text-center mt-4">
+          <p className="text-sm text-gray-500">
+            ← Deslize para ver mais vídeos →
+          </p>
         </div>
 
         {/* Call to Action */}
