@@ -2,7 +2,7 @@ import { FaWhatsapp } from "react-icons/fa";
 
 const CallToAction = () => {
   return (
-    <section id="contato" className="py-16 md:py-20 bg-secondary section-fade">
+    <section id="contato" className="py-16 md:py-20 bg-secondary section-fade scroll-reveal">
       <div className="container-custom">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 px-4">

@@ -1,7 +1,7 @@
 import { Card, CardContent } from "./ui/card";
 
 const BenefitCard = ({ image, title, description }: { image: string, title: string, description: string }) => (
-  <Card className="bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 group animate-fade-in">
+  <Card className="bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 group animate-fade-in h-full flex flex-col">
     <div className="overflow-hidden">
       <img 
         src={image} 
@@ -11,16 +11,16 @@ const BenefitCard = ({ image, title, description }: { image: string, title: stri
         decoding="async"
       />
     </div>
-    <CardContent className="p-4 md:p-6">
+    <CardContent className="p-4 md:p-6 flex-1 flex flex-col">
       <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 transition-colors duration-300 group-hover:text-primary">{title}</h3>
-      <p className="text-dark text-sm md:text-base leading-relaxed">{description}</p>
+      <p className="text-dark text-sm md:text-base leading-relaxed flex-1">{description}</p>
     </CardContent>
   </Card>
 );
 
 const Benefits = () => {
   return (
-    <section id="beneficios" className="py-16 md:py-20 section-fade">
+    <section id="beneficios" className="py-16 md:py-20 section-fade scroll-reveal">
       <div className="container-custom">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="section-title">Onde você pode treinar comigo</h2>
@@ -43,13 +43,11 @@ const Benefits = () => {
             description="Atendimento personalizado na academia do seu condomínio, com toda comodidade e privacidade que você merece."
           />
           
-          <div className="sm:col-span-2 lg:col-span-1 sm:mx-auto lg:mx-0 sm:max-w-sm lg:max-w-none">
-            <BenefitCard 
-              image="/ead.png" 
-              title="Treinamento Online" 
-              description="Acompanhamento personalizado à distância com planos de treino customizados e suporte contínuo."
-            />
-          </div>
+          <BenefitCard 
+            image="/ead.png" 
+            title="Treinamento Online" 
+            description="Acompanhamento personalizado à distância com planos de treino customizados e suporte contínuo."
+          />
         </div>
       </div>
     </section>

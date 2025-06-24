@@ -1,6 +1,6 @@
 const Gallery = () => {
   return (
-    <section className="py-20 section-fade">
+    <section className="py-20 section-fade scroll-reveal">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="section-title">Transformação Real</h2>

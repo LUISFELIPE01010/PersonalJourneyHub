@@ -25,7 +25,7 @@ const Hero = () => {
           </div>
           <div className="lg:w-1/2 text-center lg:text-left order-2 lg:order-1">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              <span className="block">+<CountUp end={100} duration={2.5} /> alunos já</span>
+              <span className="block">+<CountUp end={100} duration={4} /> alunos já</span>
               <span className="block text-primary">transformam suas vidas!</span>
               <span className="block mt-2 lg:mt-3">Agora é a sua vez.</span>
             </h1>

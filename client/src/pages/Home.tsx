@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import About from "../components/About";
@@ -15,6 +16,7 @@ import WhatsAppButton from "../components/WhatsAppButton";
 
 export default function Home() {
   const sectionsRef = useRef<HTMLElement[]>([]);
+  useScrollReveal();
 
   useEffect(() => {
     const observerOptions = {

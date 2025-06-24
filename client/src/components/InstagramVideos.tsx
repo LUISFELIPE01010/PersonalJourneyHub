@@ -247,7 +247,7 @@ const InstagramVideos = () => {
   };
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-br from-white to-gray-50 section-fade">
+    <section className="py-16 md:py-20 bg-gradient-to-br from-white to-gray-50 section-fade scroll-reveal">
       <div className="container-custom">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
