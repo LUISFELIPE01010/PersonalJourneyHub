@@ -157,7 +157,14 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
       className="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl overflow-hidden cursor-pointer group touch-manipulation shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
       style={{ aspectRatio: '9/16' }}
       onClick={onVideoClick}
-      onTouchStart={(e) => e.stopPropagation()}
+      onTouchStart={(e) => {
+        // Allow video touches but don't interfere with carousel swipe
+        e.stopPropagation();
+      }}
+      onTouchMove={(e) => {
+        // Allow vertical scrolling but stop horizontal propagation to carousel
+        e.stopPropagation();
+      }}
     >
       {/* Video Element */}
       <video
@@ -209,22 +216,31 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         </div>
       )}
 
-      {/* Play/Pause Button - Center */}
-      {isLoaded && !hasError && (
+      {/* Play Button - Only when not playing */}
+      {isLoaded && !hasError && !isPlaying && (
         <button
           onClick={togglePlay}
           onTouchEnd={togglePlay}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/40 transition-all duration-200 hover:scale-105 touch-manipulation z-20"
           style={{ minHeight: '48px', minWidth: '48px' }}
         >
-          {!isPlaying ? (
-            <div className="w-0 h-0 border-l-[16px] md:border-l-[12px] border-l-white border-y-[10px] md:border-y-[8px] border-y-transparent ml-1"></div>
-          ) : (
+          <div className="w-0 h-0 border-l-[16px] md:border-l-[12px] border-l-white border-y-[10px] md:border-y-[8px] border-y-transparent ml-1"></div>
+        </button>
+      )}
+
+      {/* Pause Button - Hidden overlay, only appears on hover/touch */}
+      {isLoaded && !hasError && isPlaying && (
+        <button
+          onClick={togglePlay}
+          onTouchEnd={togglePlay}
+          className="absolute inset-0 bg-transparent flex items-center justify-center touch-manipulation z-10"
+        >
+          <div className="w-20 h-20 md:w-16 md:h-16 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-0 hover:opacity-100 md:group-hover:opacity-100 transition-opacity duration-200">
             <div className="flex space-x-1.5">
               <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
               <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
             </div>
-          )}
+          </div>
         </button>
       )}
 
@@ -329,24 +345,29 @@ const InstagramVideos = () => {
     if (!touchStartX.current) return;
     touchEndX.current = e.touches[0].clientX;
     
-    // Prevent page scroll during horizontal swipe
-    const distance = Math.abs(touchStartX.current - touchEndX.current);
-    if (distance > 10) {
+    // Only prevent scroll for horizontal movement
+    const horizontalDistance = Math.abs(touchStartX.current - touchEndX.current);
+    if (horizontalDistance > 15) {
       e.preventDefault();
+      e.stopPropagation();
     }
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchStartX.current || !touchEndX.current) return;
 
     const distance = touchStartX.current - touchEndX.current;
-    const isLeftSwipe = distance > 75; // Increased threshold for better UX
-    const isRightSwipe = distance < -75;
+    const isLeftSwipe = distance > 50; // Reduced threshold for easier swiping
+    const isRightSwipe = distance < -50;
 
     if (isLeftSwipe && currentIndex < maxIndex) {
+      e.preventDefault();
+      e.stopPropagation();
       nextSlide();
     }
     if (isRightSwipe && currentIndex > 0) {
+      e.preventDefault();
+      e.stopPropagation();
       prevSlide();
     }
 
@@ -363,7 +384,10 @@ const InstagramVideos = () => {
   };
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-br from-white to-gray-50 section-fade scroll-reveal">
+    <section 
+      className="py-16 md:py-20 bg-gradient-to-br from-white to-gray-50 section-fade scroll-reveal"
+      style={{ touchAction: 'auto' }}
+    >
       <div className="container-custom">
         <div className="text-center mb-8 md:mb-12 scroll-reveal">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
@@ -418,7 +442,13 @@ const InstagramVideos = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch' }}
+            style={{ 
+              touchAction: 'pan-x',
+              WebkitOverflowScrolling: 'touch',
+              WebkitTouchCallout: 'none',
+              WebkitUserSelect: 'none',
+              userSelect: 'none'
+            }}
           >
             <div 
               className="flex transition-transform duration-500 ease-out gap-3 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8"

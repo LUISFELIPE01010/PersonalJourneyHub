@@ -17,8 +17,10 @@ Website para personal trainer com seção de vídeos do Instagram que apresenta 
 - Adicionado tratamento de erro robusto com retry
 - Otimizado preload apenas para vídeos ativos
 - Design visual aprimorado com gradientes e sombras
-- Botões com cores atrativas (vermelho para play/pause)
-- Indicadores visuais melhorados (HD, duração, ativo)
+- Botões transparentes conforme solicitado
+- Botão play some após clicar (não fica sobre o vídeo)
+- Corrigido swipe/touch no mobile para navegação fluida
+- Resolvido travamento de scroll na seção de vídeos
 
 ## Project Architecture  
 - Frontend: React/TypeScript com Vite
