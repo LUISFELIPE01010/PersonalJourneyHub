@@ -15,7 +15,7 @@ const CallToAction = () => {
 
           <a 
             href="https://wa.me/5513997676164" 
-            className="inline-flex items-center bg-primary text-white font-semibold px-6 sm:px-10 py-4 sm:py-5 rounded-lg text-base sm:text-lg shadow-lg hover:bg-red-700 transition transform hover:-translate-y-1 mx-4"
+            className="inline-flex items-center bg-primary text-white font-semibold px-6 sm:px-10 py-4 sm:py-5 rounded-lg text-base sm:text-lg shadow-lg hover:bg-red-700 transition transform hover:-translate-y-1 mx-4 ml-[0px] mr-[0px]"
             target="_blank"
             rel="noopener noreferrer"
           >
