@@ -236,7 +236,7 @@ const InstagramVideos = () => {
           </a>
         </div>
 
-        {/* Navigation Buttons for Desktop */}
+        {/* Navigation Buttons for Desktop only */}
         {maxIndex > 0 && (
           <div className="hidden md:flex justify-center gap-4 mb-8">
             <Button
