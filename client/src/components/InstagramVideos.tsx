@@ -22,8 +22,8 @@ const instagramPosts: InstagramPost[] = [
     id: 2,
     title: "Performance Avançada", 
     description: "",
-    embedUrl: "https://www.instagram.com/reel/DArQoWhRjQ4/",
-    postId: "DArQoWhRjQ4"
+    embedUrl: "https://www.instagram.com/reel/DHv96xnR4Ud/",
+    postId: "DHv96xnR4Ud"
   },
   {
     id: 3,
@@ -317,15 +317,15 @@ const InstagramVideos = () => {
 
           {/* Dots Indicator - Smaller dots especially on mobile */}
           {maxIndex > 0 && (
-            <div className="flex justify-center mt-8 space-x-1.5">
+            <div className="flex justify-center mt-8 space-x-1">
               {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
                   className={`rounded-full transition-all duration-200 ${
                     index === currentIndex 
-                      ? 'bg-primary w-2 h-2 md:w-3 md:h-3' 
-                      : 'bg-gray-300 hover:bg-gray-400 w-1.5 h-1.5 md:w-2 md:h-2'
+                      ? 'bg-primary w-1.5 h-1.5 md:w-2.5 md:h-2.5' 
+                      : 'bg-gray-300 hover:bg-gray-400 w-1 h-1 md:w-1.5 md:h-1.5'
                   }`}
                 />
               ))}

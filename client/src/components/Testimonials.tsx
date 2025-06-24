@@ -192,11 +192,11 @@ const Testimonials = () => {
         
         {/* Dots Navigation */}
         <div className="mt-8 md:mt-12 flex justify-center">
-          <div className="flex space-x-2">
+          <div className="flex space-x-1.5">
             {Array.from({ length: maxIndex + 1 }).map((_, index) => (
               <button
                 key={index}
-                className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-colors ${
+                className={`w-1.5 h-1.5 md:w-3 md:h-3 rounded-full transition-colors ${
                   currentIndex === index ? "bg-primary" : "bg-gray-300"
                 }`}
                 onClick={() => goToSlide(index)}

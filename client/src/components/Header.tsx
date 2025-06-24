@@ -40,8 +40,8 @@ const Header = () => {
         scrolled ? "shadow-md py-2" : "py-4"
       }`}
     >
-      <div className="container-custom flex justify-between items-center">
-        <a href="#" className="text-xl md:text-2xl font-bold text-primary flex items-center gap-2">
+      <div className="container-custom flex justify-between md:justify-between items-center">
+        <a href="#" className="text-xl md:text-2xl font-bold text-primary flex items-center gap-2 md:order-none order-1 flex-1 md:flex-none justify-center md:justify-start">
           <span className="hidden sm:inline">Junior Nobrega</span>
           <span className="sm:hidden">Junior</span>
           <CgGym className="text-red-600" size={28} />
@@ -84,7 +84,7 @@ const Header = () => {
           href="https://wa.me/5513997676164"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:flex bg-primary text-white px-4 py-2 rounded-full font-medium items-center hover:bg-red-700 transition"
+          className="hidden sm:flex bg-primary text-white px-4 py-2 rounded-full font-medium items-center hover:bg-red-700 transition order-last"
         >
           <FaWhatsapp className="mr-2" />
           <span>Fale comigo</span>
@@ -96,7 +96,7 @@ const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden order-first"
             >
               <Menu size={24} />
             </Button>
