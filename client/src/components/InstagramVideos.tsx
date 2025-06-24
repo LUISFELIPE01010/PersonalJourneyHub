@@ -45,40 +45,107 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Reset error state when video changes
+  useEffect(() => {
+    setHasError(false);
+    setIsLoaded(false);
+    setIsPlaying(false);
+  }, [video.id]);
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement || !isActive) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isLoaded && !hasError) {
+            // Load video when it comes into view
+            videoElement.load();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(videoElement);
+    return () => observer.disconnect();
+  }, [isActive, isLoaded, hasError]);
 
   const handleVideoLoad = () => {
     setIsLoaded(true);
+    setHasError(false);
   };
 
-  const togglePlay = (e: React.MouseEvent | React.TouchEvent) => {
+  const handleVideoError = () => {
+    setHasError(true);
+    setIsLoaded(false);
+    setIsPlaying(false);
+  };
+
+  const togglePlay = async (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
     e.preventDefault();
+    
     const videoElement = videoRef.current;
-    if (!videoElement) return;
+    if (!videoElement || hasError) return;
 
-    if (isPlaying) {
-      videoElement.pause();
+    try {
+      if (isPlaying) {
+        videoElement.pause();
+        setIsPlaying(false);
+      } else {
+        // Ensure video is muted for mobile autoplay
+        videoElement.muted = true;
+        setIsMuted(true);
+        
+        // For mobile devices, add a small delay to ensure proper loading
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile && videoElement.readyState < 2) {
+          videoElement.load();
+          
+          // Wait for video to be ready
+          await new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => reject(new Error('Video load timeout')), 5000);
+            
+            videoElement.onloadeddata = () => {
+              clearTimeout(timeout);
+              resolve(true);
+            };
+            
+            videoElement.onerror = () => {
+              clearTimeout(timeout);
+              reject(new Error('Video load error'));
+            };
+          });
+          
+          // Small delay for mobile stability
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        
+        const playPromise = videoElement.play();
+        if (playPromise) {
+          await playPromise;
+        }
+        setIsPlaying(true);
+      }
+    } catch (error) {
+      console.log('Video play failed:', error);
       setIsPlaying(false);
-    } else {
-      // Force mute on mobile for autoplay compatibility
-      videoElement.muted = true;
-      setIsMuted(true);
-      
-      const playPromise = videoElement.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setIsPlaying(true);
-        }).catch((error) => {
-          console.log('Video play failed:', error);
-          setIsPlaying(false);
-        });
+      if (error.message !== 'Video load timeout') {
+        setHasError(true);
       }
     }
   };
 
-  const toggleMute = (e: React.MouseEvent) => {
+  const toggleMute = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
@@ -98,71 +165,90 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         ref={videoRef}
         className="w-full h-full object-cover"
         playsInline
-        muted={isMuted}
+        muted
         loop
-        preload="metadata"
+        disablePictureInPicture
+        preload={isActive ? "metadata" : "none"}
         onLoadedData={handleVideoLoad}
+        onError={handleVideoError}
         onEnded={() => setIsPlaying(false)}
-        webkit-playsinline="true"
-        x5-video-player-type="h5"
-        x5-video-orientation="portraint"
-        x5-video-player-fullscreen="true"
-        controls={false}
+        onLoadStart={() => setIsLoaded(false)}
+        onCanPlay={() => setIsLoaded(true)}
+        style={{ backgroundColor: '#000' }}
+        poster={`data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400"><rect width="300" height="400" fill="#1a1a1a"/><circle cx="150" cy="200" r="30" fill="#666"/><polygon points="140,185 140,215 170,200" fill="#999"/></svg>')}`}
       >
         <source src={video.videoUrl} type="video/mp4" />
-        <source src={video.videoUrl} type="video/webm" />
         Seu navegador não suporta vídeos.
       </video>
 
-      {/* Loading State */}
-      {!isLoaded && (
-        <div className="absolute inset-0 bg-gray-900 flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+      {/* Loading/Error State */}
+      {!isLoaded && !hasError && (
+        <div className="absolute inset-0 bg-gray-900 flex flex-col items-center justify-center">
+          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mb-2"></div>
+          <p className="text-white text-xs opacity-70">Carregando...</p>
         </div>
       )}
 
-      {/* Simple Play Button - Always Visible */}
-      {!isPlaying && isLoaded && (
+      {/* Error State */}
+      {hasError && (
+        <div className="absolute inset-0 bg-gray-900 flex flex-col items-center justify-center">
+          <div className="w-8 h-8 text-white mb-2">⚠️</div>
+          <p className="text-white text-xs opacity-70 text-center px-2">
+            Erro ao carregar vídeo
+          </p>
+          <button 
+            onClick={() => {
+              setHasError(false);
+              videoRef.current?.load();
+            }}
+            className="mt-2 text-xs text-blue-400 underline"
+          >
+            Tentar novamente
+          </button>
+        </div>
+      )}
+
+      {/* Play Button - Always Visible when not playing */}
+      {!isPlaying && isLoaded && !hasError && (
         <button
           onClick={togglePlay}
-          onTouchStart={togglePlay}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-12 md:h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-all duration-200 hover:scale-110 touch-manipulation"
-          style={{ minHeight: '44px', minWidth: '44px' }}
+          onTouchEnd={togglePlay}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-all duration-200 hover:scale-105 touch-manipulation z-10"
+          style={{ minHeight: '48px', minWidth: '48px' }}
         >
-          <div className="w-0 h-0 border-l-[12px] md:border-l-[10px] border-l-white border-y-[8px] md:border-y-[6px] border-y-transparent ml-1"></div>
+          <div className="w-0 h-0 border-l-[16px] md:border-l-[12px] border-l-white border-y-[10px] md:border-y-[8px] border-y-transparent ml-1"></div>
         </button>
       )}
 
-      {/* Video Controls Overlay - Only when playing */}
+      {/* Pause Button - Visible when playing */}
       {isPlaying && (
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-          {/* Pause Button */}
-          <button
-            onClick={togglePlay}
-            onTouchStart={togglePlay}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-12 md:h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors touch-manipulation"
-            style={{ minHeight: '44px', minWidth: '44px' }}
-          >
-            <div className="flex space-x-1">
-              <div className="w-2 h-6 md:w-1.5 md:h-5 bg-white rounded"></div>
-              <div className="w-2 h-6 md:w-1.5 md:h-5 bg-white rounded"></div>
-            </div>
-          </button>
+        <button
+          onClick={togglePlay}
+          onTouchEnd={togglePlay}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-all duration-200 hover:scale-105 touch-manipulation z-10 opacity-80 md:opacity-0 md:group-hover:opacity-80"
+          style={{ minHeight: '48px', minWidth: '48px' }}
+        >
+          <div className="flex space-x-1.5">
+            <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
+            <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
+          </div>
+        </button>
+      )}
 
-          {/* Mute/Unmute Button */}
-          <button
-            onClick={toggleMute}
-            onTouchStart={toggleMute}
-            className="absolute top-3 right-3 w-10 h-10 md:w-8 md:h-8 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors touch-manipulation"
-            style={{ minHeight: '44px', minWidth: '44px' }}
-          >
-            {isMuted ? (
-              <VolumeX className="w-5 h-5 md:w-4 md:h-4" />
-            ) : (
-              <Volume2 className="w-5 h-5 md:w-4 md:h-4" />
-            )}
-          </button>
-        </div>
+      {/* Mute/Unmute Button - Always visible */}
+      {isLoaded && !hasError && (
+        <button
+          onClick={toggleMute}
+          onTouchEnd={toggleMute}
+          className="absolute top-4 right-4 w-12 h-12 md:w-10 md:h-10 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors touch-manipulation z-10"
+          style={{ minHeight: '48px', minWidth: '48px' }}
+        >
+          {isMuted ? (
+            <VolumeX className="w-6 h-6 md:w-5 md:h-5" />
+          ) : (
+            <Volume2 className="w-6 h-6 md:w-5 md:h-5" />
+          )}
+        </button>
       )}
 
       {/* Duration Badge */}
@@ -236,18 +322,26 @@ const InstagramVideos = () => {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStartX.current) return;
     touchEndX.current = e.touches[0].clientX;
+    
+    // Prevent page scroll during horizontal swipe
+    const distance = Math.abs(touchStartX.current - touchEndX.current);
+    if (distance > 10) {
+      e.preventDefault();
+    }
   };
 
   const handleTouchEnd = () => {
     if (!touchStartX.current || !touchEndX.current) return;
 
     const distance = touchStartX.current - touchEndX.current;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
+    const isLeftSwipe = distance > 75; // Increased threshold for better UX
+    const isRightSwipe = distance < -75;
 
     if (isLeftSwipe && currentIndex < maxIndex) {
       nextSlide();
@@ -320,10 +414,11 @@ const InstagramVideos = () => {
           {/* Videos Carousel with Touch Support */}
           <div 
             ref={carouselRef}
-            className="overflow-hidden px-4 md:px-6 lg:px-8 touch-pan-x"
+            className="overflow-hidden px-4 md:px-6 lg:px-8"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch' }}
           >
             <div 
               className="flex transition-transform duration-300 ease-out gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6"
@@ -331,23 +426,28 @@ const InstagramVideos = () => {
                 transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
               }}
             >
-              {videoPosts.map((video, index) => (
-                <div 
-                  key={video.id} 
-                  className="flex-shrink-0"
-                  style={{ 
-                    width: slidesToShow === 1 
-                      ? `calc(100% - 2rem)` 
-                      : `calc(${100 / slidesToShow}% - ${(slidesToShow - 1) * 1.25}rem / ${slidesToShow})`
-                  }}
-                >
-                  <VideoCard 
-                    video={video} 
-                    isActive={index >= currentIndex && index < currentIndex + slidesToShow}
-                    onVideoClick={() => handleVideoClick(index)}
-                  />
-                </div>
-              ))}
+              {videoPosts.map((video, index) => {
+                const isVisible = index >= currentIndex && index < currentIndex + slidesToShow;
+                const isNextToVisible = index >= currentIndex - 1 && index <= currentIndex + slidesToShow;
+                
+                return (
+                  <div 
+                    key={video.id} 
+                    className="flex-shrink-0"
+                    style={{ 
+                      width: slidesToShow === 1 
+                        ? `calc(100% - 2rem)` 
+                        : `calc(${100 / slidesToShow}% - ${(slidesToShow - 1) * 1.25}rem / ${slidesToShow})`
+                    }}
+                  >
+                    <VideoCard 
+                      video={video} 
+                      isActive={isVisible}
+                      onVideoClick={() => handleVideoClick(index)}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
 
