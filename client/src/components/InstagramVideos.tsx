@@ -284,18 +284,7 @@ const InstagramVideos = () => {
             </div>
           </div>
 
-          {/* Dots indicator for mobile */}
-          <div className="flex justify-center mt-6 space-x-2">
-            {videoPosts.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentIndex ? 'bg-red-600' : 'bg-gray-300'
-                }`}
-              />
-            ))}
-          </div>
+          
         </div>
 
         {/* Mobile swipe hint */}
