@@ -327,7 +327,7 @@ const InstagramVideos = () => {
                 </div>
               ))}
             </div>
-          </div></div>
+          </div>
 
           {/* Dots Indicator - Mobile only */}
           {maxIndex > 0 && (
@@ -365,7 +365,7 @@ const InstagramVideos = () => {
           >
             Veja mais dicas
           </Button>
-        </div></div>
+        </div>
       </div>
     </section>
   );
