@@ -52,8 +52,8 @@ export default function Home() {
       <Benefits />
       <Quiz />
       <Testimonials />
-      <MotivationalQuote />
       <InstagramVideos />
+      <MotivationalQuote />
       <Gallery />
       <CallToAction />
       <Footer />

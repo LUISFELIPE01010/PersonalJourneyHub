@@ -1,15 +1,19 @@
 import { Card, CardContent } from "./ui/card";
 
 const BenefitCard = ({ image, title, description }: { image: string, title: string, description: string }) => (
-  <Card className="bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-    <img 
-      src={image} 
-      alt={title} 
-      className="w-full h-48 md:h-64 object-cover" 
-    />
+  <Card className="bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 group animate-fade-in">
+    <div className="overflow-hidden">
+      <img 
+        src={image} 
+        alt={title} 
+        className="w-full h-48 md:h-56 lg:h-64 object-cover transition-transform duration-500 group-hover:scale-110 loading-lazy" 
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
     <CardContent className="p-4 md:p-6">
-      <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3">{title}</h3>
-      <p className="text-dark text-sm md:text-base">{description}</p>
+      <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 transition-colors duration-300 group-hover:text-primary">{title}</h3>
+      <p className="text-dark text-sm md:text-base leading-relaxed">{description}</p>
     </CardContent>
   </Card>
 );
@@ -26,24 +30,24 @@ const Benefits = () => {
           </p>
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 animate-fade-in-up">
           <BenefitCard 
-            image="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
+            image="/iron.webp" 
             title="Ironberg Alphaville" 
             description="Academia completa e moderna no coração de Alphaville, com equipamentos de última geração e ambiente motivador para seus treinos."
           />
           
           <BenefitCard 
-            image="https://images.unsplash.com/photo-1571019613576-2b22c76fd955?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
+            image="/academia.jpg" 
             title="Treino Particular em Condomínios" 
             description="Atendimento personalizado na academia do seu condomínio, com toda comodidade e privacidade que você merece."
           />
           
           <div className="sm:col-span-2 lg:col-span-1 sm:mx-auto lg:mx-0 sm:max-w-sm lg:max-w-none">
             <BenefitCard 
-              image="https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
+              image="/ead.png" 
               title="Treinamento Online" 
-              description="Treinos personalizados no conforto da sua casa! Acompanhamento em tempo real, correção de movimentos e toda atenção que você merece, onde quer que esteja."
+              description="Acompanhamento personalizado à distância com planos de treino customizados e suporte contínuo."
             />
           </div>
         </div>
