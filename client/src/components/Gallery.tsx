@@ -9,7 +9,7 @@ const Gallery = () => {
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           <img 
-            src="https://pixabay.com/get/g77228a5b5df31af10cae3e8f4918755364909ac0e0e63b797d65b1285dd1c515a4ac25e8ed766bdbbb8d0a01dfa6c2c4caaf46f55bb2ed1d61b37c5a0c57dc52_1280.jpg" 
+            src="/esteira.jpg" 
             alt="Aluno em treinamento" 
             className="w-full h-64 md:h-72 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300" 
           />
