@@ -63,6 +63,27 @@ img[loading="eager"] {
   will-change: transform;
 }
 
+/* SEO and accessibility improvements */
+h1, h2, h3, h4, h5, h6 {
+  scroll-margin-top: 100px;
+}
+
+/* Skip to main content for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
 /* Mobile-specific optimizations */
 @media (max-width: 768px) {
   img {

@@ -19,6 +19,12 @@ export default function Home() {
   useScrollReveal();
 
   useEffect(() => {
+    // Set page title dynamically
+    document.title = "Junior Nobrega - Personal Trainer Santos | Treinos Personalizados";
+    
+    // Add structured data to body
+    document.body.setAttribute('itemscope', '');
+    document.body.setAttribute('itemtype', 'https://schema.org/WebPage');
     const observerOptions = {
       root: null,
       rootMargin: "0px",

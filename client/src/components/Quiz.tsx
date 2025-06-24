@@ -208,7 +208,7 @@ const Quiz = () => {
                     onClick={() => {
                       window.open('https://wa.me/5513997676164?text=Olá! Acabei de fazer o quiz e quero começar meu treino personalizado!', '_blank');
                     }}
-                    className="flex-1 py-3 text-lg bg-green-600 hover:bg-green-700"
+                    className="flex-1 py-3 text-lg bg-primary hover:bg-primary/90 text-white"
                     size="lg"
                   >
                     Começar Agora

@@ -17,7 +17,7 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 
 const About = () => {
   return (
-    <section id="sobre" className="py-16 md:py-20 bg-secondary section-fade scroll-reveal">
+    <section id="sobre" className="py-16 md:py-20 bg-secondary section-fade scroll-reveal" itemScope itemType="https://schema.org/Person">
       <div className="container-custom">
         <div className="text-center mb-12 md:mb-16 scroll-reveal">
           <h2 className="section-title">Quem é Junior Nobrega</h2>
