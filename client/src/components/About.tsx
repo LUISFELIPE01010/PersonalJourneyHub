@@ -35,37 +35,37 @@ const About = () => {
           
           <div className="lg:w-3/5 w-full">
             <p className="text-base md:text-lg mb-6 md:mb-8 leading-relaxed">
-              Junior Nobrega é personal trainer, formado em Educação Física, com foco em transformar vidas por meio da atividade física.
+              Sou Junior Nobrega, personal trainer formado em Educação Física, e minha missão é transformar sua vida através da atividade física.
             </p>
             <p className="text-base md:text-lg mb-8 md:mb-10 leading-relaxed">
-              Apaixonado por saúde, bem-estar e performance, Junior atua com um atendimento próximo e motivador, construindo resultados reais para quem busca emagrecer, ganhar massa muscular ou melhorar o condicionamento físico.
+              Apaixonado por saúde, bem-estar e performance, trabalho com atendimento próximo e motivador, construindo resultados reais para quem busca emagrecer, ganhar massa muscular ou melhorar o condicionamento físico. Acredito que cada pessoa tem potencial único, e meu papel é desbloquear esse potencial através de treinos estratégicos e acompanhamento personalizado.
             </p>
             
-            <h3 className="text-lg md:text-xl font-bold mb-6 md:mb-8">Diferenciais:</h3>
+            <h3 className="text-lg md:text-xl font-bold mb-6 md:mb-8">Por que escolher treinar comigo:</h3>
             
             <div className="grid sm:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
               <FeatureCard 
                 icon={<Dumbbell className="h-5 w-5 md:h-6 md:w-6" />}
-                title="Treinos adaptados para cada aluno"
-                description="Programas personalizados de acordo com seus objetivos e condição física."
+                title="Crio treinos sob medida para VOCÊ"
+                description="Desenvolvo programas únicos baseados no SEU corpo, SEU tempo e SEUS objetivos específicos."
               />
               
               <FeatureCard 
                 icon={<MessageCircle className="h-5 w-5 md:h-6 md:w-6" />}
-                title="Suporte e acompanhamento constante"
-                description="Comunicação direta e feedback regular para ajustar sua evolução."
+                title="Estou sempre ao seu lado"
+                description="Acompanho cada passo da sua jornada com feedback constante e ajustes precisos."
               />
               
               <FeatureCard 
                 icon={<TrendingUp className="h-5 w-5 md:h-6 md:w-6" />}
-                title="Foco em resultado sem fórmulas mágicas"
-                description="Métodos comprovados e baseados em ciência para resultados duradouros."
+                title="Resultados reais, sem enganação"
+                description="Uso métodos científicos comprovados. Nada de promessas vazias ou fórmulas milagrosas."
               />
               
               <FeatureCard 
                 icon={<Flame className="h-5 w-5 md:h-6 md:w-6" />}
-                title="Motivação e disciplina"
-                description="Apoio para você sair da zona de conforto e conquistar suas metas."
+                title="Transformo sua mentalidade"
+                description="Não só treino seu corpo, mas desenvolvo sua disciplina e confiança para vencer qualquer desafio."
               />
             </div>
           </div>
