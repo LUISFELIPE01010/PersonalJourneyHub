@@ -43,25 +43,9 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
   onVideoClick: () => void;
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
-
-    if (isActive && isLoaded) {
-      videoElement.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        setIsPlaying(false);
-      });
-    } else {
-      videoElement.pause();
-      setIsPlaying(false);
-    }
-  }, [isActive, isLoaded]);
 
   const handleVideoLoad = () => {
     setIsLoaded(true);
@@ -121,39 +105,47 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         </div>
       )}
 
-      {/* Video Controls Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        {/* Play/Pause Button */}
+      {/* Simple Play Button - Always Visible */}
+      {!isPlaying && isLoaded && (
         <button
           onClick={togglePlay}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-all duration-200 hover:scale-110"
         >
-          {isPlaying ? (
+          <div className="w-0 h-0 border-l-[10px] border-l-white border-y-[6px] border-y-transparent ml-1"></div>
+        </button>
+      )}
+
+      {/* Video Controls Overlay - Only when playing */}
+      {isPlaying && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* Pause Button */}
+          <button
+            onClick={togglePlay}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+          >
             <div className="flex space-x-1">
-              <div className="w-2 h-6 bg-white rounded"></div>
-              <div className="w-2 h-6 bg-white rounded"></div>
+              <div className="w-1.5 h-5 bg-white rounded"></div>
+              <div className="w-1.5 h-5 bg-white rounded"></div>
             </div>
-          ) : (
-            <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[8px] border-y-transparent ml-1"></div>
-          )}
-        </button>
+          </button>
 
-        {/* Mute/Unmute Button */}
-        <button
-          onClick={toggleMute}
-          className="absolute top-4 right-4 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-        >
-          {isMuted ? (
-            <VolumeX className="w-5 h-5" />
-          ) : (
-            <Volume2 className="w-5 h-5" />
-          )}
-        </button>
-
-        {/* Duration Badge */}
-        <div className="absolute bottom-4 right-4 bg-black/70 text-white text-xs px-2 py-1 rounded">
-          {video.duration}
+          {/* Mute/Unmute Button */}
+          <button
+            onClick={toggleMute}
+            className="absolute top-3 right-3 w-8 h-8 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+          >
+            {isMuted ? (
+              <VolumeX className="w-4 h-4" />
+            ) : (
+              <Volume2 className="w-4 h-4" />
+            )}
+          </button>
         </div>
+      )}
+
+      {/* Duration Badge */}
+      <div className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm">
+        {video.duration}
       </div>
 
       {/* Video Info */}
