@@ -86,7 +86,11 @@ The application follows a full-stack monorepo structure with:
 
 Changelog:
 - June 23, 2025. Initial setup
+- June 24, 2025. Major optimizations: Mobile-first design, Instagram videos cleanup, touch navigation, performance improvements
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Mobile-first design: Photo first in hero section, optimized touch targets, smaller navigation buttons.
+Instagram integration: Clean video embeds without descriptions, touch-enabled carousel.
+Performance priorities: Lightweight, fast-loading, excellent responsiveness across all devices.

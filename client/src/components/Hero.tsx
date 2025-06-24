@@ -18,7 +18,9 @@ const Hero = () => {
             <img 
               src="/foto.png" 
               alt="Personal trainer Junior Nobrega" 
-              className="rounded-xl shadow-lg w-80 h-80 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem] object-cover" 
+              className="rounded-xl shadow-lg w-80 h-80 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem] object-cover"
+              loading="eager"
+              decoding="async"
             />
           </div>
           <div className="lg:w-1/2 text-center lg:text-left order-2 lg:order-1">

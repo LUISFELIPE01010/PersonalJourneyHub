@@ -42,8 +42,7 @@ const Header = () => {
     >
       <div className="container-custom flex justify-between md:justify-between items-center">
         <a href="#" className="text-xl md:text-2xl font-bold text-primary flex items-center gap-2 md:order-none order-1 flex-1 md:flex-none justify-center md:justify-start">
-          <span className="hidden sm:inline">Junior Nobrega</span>
-          <span className="sm:hidden">Junior</span>
+          <span>Junior Nobrega</span>
           <CgGym className="text-red-600" size={28} />
         </a>
 

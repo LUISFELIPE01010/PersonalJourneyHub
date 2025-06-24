@@ -145,25 +145,25 @@ const Testimonials = () => {
         </div>
         
         <div className="relative">
-          {/* Navigation Buttons - Desktop */}
+          {/* Navigation Buttons - Smaller on mobile */}
           <Button
             variant="outline"
             size="icon"
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white hidden md:flex"
+            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white w-8 h-8 md:w-10 md:h-10 md:left-2"
             onClick={prevSlide}
             disabled={currentIndex === 0}
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-3 w-3 md:h-4 md:w-4" />
           </Button>
           
           <Button
             variant="outline"
             size="icon"
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white hidden md:flex"
+            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white w-8 h-8 md:w-10 md:h-10 md:right-2"
             onClick={nextSlide}
             disabled={currentIndex >= maxIndex}
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-3 w-3 md:h-4 md:w-4" />
           </Button>
 
           <div className="overflow-hidden px-2 md:px-8">
