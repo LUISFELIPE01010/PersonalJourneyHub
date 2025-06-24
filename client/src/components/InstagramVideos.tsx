@@ -47,6 +47,7 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPlayButton, setShowPlayButton] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Reset states when video changes
@@ -55,6 +56,7 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
     setIsLoaded(false);
     setIsPlaying(false);
     setIsLoading(false);
+    setShowPlayButton(true);
   }, [video.id]);
 
   // Load video when it becomes active
@@ -95,7 +97,11 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
       if (isPlaying) {
         videoElement.pause();
         setIsPlaying(false);
+        setShowPlayButton(true);
       } else {
+        // Hide play button immediately when clicked
+        setShowPlayButton(false);
+        
         // Ensure video is ready
         if (videoElement.readyState < 2) {
           setIsLoading(true);
@@ -136,6 +142,7 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
       console.log('Video play failed:', error);
       setIsPlaying(false);
       setIsLoading(false);
+      setShowPlayButton(true);
       if (error.message !== 'Timeout') {
         setHasError(true);
       }
@@ -154,17 +161,9 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
 
   return (
     <div 
-      className="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl overflow-hidden cursor-pointer group touch-manipulation shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+      className="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl overflow-hidden cursor-pointer group shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
       style={{ aspectRatio: '9/16' }}
       onClick={onVideoClick}
-      onTouchStart={(e) => {
-        // Allow video touches but don't interfere with carousel swipe
-        e.stopPropagation();
-      }}
-      onTouchMove={(e) => {
-        // Allow vertical scrolling but stop horizontal propagation to carousel
-        e.stopPropagation();
-      }}
     >
       {/* Video Element */}
       <video
@@ -216,11 +215,11 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         </div>
       )}
 
-      {/* Play Button - Only when not playing */}
-      {isLoaded && !hasError && !isPlaying && (
+      {/* Play Button - Only when not playing and button should be shown */}
+      {isLoaded && !hasError && !isPlaying && showPlayButton && (
         <button
           onClick={togglePlay}
-          onTouchEnd={togglePlay}
+          onTouchStart={togglePlay}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/40 transition-all duration-200 hover:scale-105 touch-manipulation z-20"
           style={{ minHeight: '48px', minWidth: '48px' }}
         >
@@ -228,20 +227,13 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         </button>
       )}
 
-      {/* Pause Button - Hidden overlay, only appears on hover/touch */}
+      {/* Invisible pause button overlay when playing */}
       {isLoaded && !hasError && isPlaying && (
         <button
           onClick={togglePlay}
-          onTouchEnd={togglePlay}
-          className="absolute inset-0 bg-transparent flex items-center justify-center touch-manipulation z-10"
-        >
-          <div className="w-20 h-20 md:w-16 md:h-16 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-0 hover:opacity-100 md:group-hover:opacity-100 transition-opacity duration-200">
-            <div className="flex space-x-1.5">
-              <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
-              <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
-            </div>
-          </div>
-        </button>
+          onTouchStart={togglePlay}
+          className="absolute inset-0 bg-transparent touch-manipulation z-10"
+        />
       )}
 
       {/* Mute/Unmute Button - Top Right */}
@@ -344,30 +336,19 @@ const InstagramVideos = () => {
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!touchStartX.current) return;
     touchEndX.current = e.touches[0].clientX;
-    
-    // Only prevent scroll for horizontal movement
-    const horizontalDistance = Math.abs(touchStartX.current - touchEndX.current);
-    if (horizontalDistance > 15) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchStartX.current || !touchEndX.current) return;
 
     const distance = touchStartX.current - touchEndX.current;
-    const isLeftSwipe = distance > 50; // Reduced threshold for easier swiping
-    const isRightSwipe = distance < -50;
+    const isLeftSwipe = distance > 30; // Lower threshold for easier swiping
+    const isRightSwipe = distance < -30;
 
     if (isLeftSwipe && currentIndex < maxIndex) {
-      e.preventDefault();
-      e.stopPropagation();
       nextSlide();
     }
     if (isRightSwipe && currentIndex > 0) {
-      e.preventDefault();
-      e.stopPropagation();
       prevSlide();
     }
 
@@ -384,10 +365,7 @@ const InstagramVideos = () => {
   };
 
   return (
-    <section 
-      className="py-16 md:py-20 bg-gradient-to-br from-white to-gray-50 section-fade scroll-reveal"
-      style={{ touchAction: 'auto' }}
-    >
+    <section className="py-16 md:py-20 bg-gradient-to-br from-white to-gray-50 section-fade scroll-reveal">
       <div className="container-custom">
         <div className="text-center mb-8 md:mb-12 scroll-reveal">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
@@ -442,13 +420,6 @@ const InstagramVideos = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            style={{ 
-              touchAction: 'pan-x',
-              WebkitOverflowScrolling: 'touch',
-              WebkitTouchCallout: 'none',
-              WebkitUserSelect: 'none',
-              userSelect: 'none'
-            }}
           >
             <div 
               className="flex transition-transform duration-500 ease-out gap-3 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8"
