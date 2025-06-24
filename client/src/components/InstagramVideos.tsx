@@ -51,8 +51,9 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
     setIsLoaded(true);
   };
 
-  const togglePlay = (e: React.MouseEvent) => {
+  const togglePlay = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
@@ -60,11 +61,19 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
       videoElement.pause();
       setIsPlaying(false);
     } else {
-      videoElement.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        setIsPlaying(false);
-      });
+      // Force mute on mobile for autoplay compatibility
+      videoElement.muted = true;
+      setIsMuted(true);
+      
+      const playPromise = videoElement.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setIsPlaying(true);
+        }).catch((error) => {
+          console.log('Video play failed:', error);
+          setIsPlaying(false);
+        });
+      }
     }
   };
 
@@ -79,9 +88,10 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
 
   return (
     <div 
-      className="relative bg-black rounded-2xl overflow-hidden cursor-pointer group"
+      className="relative bg-black rounded-2xl overflow-hidden cursor-pointer group touch-manipulation"
       style={{ aspectRatio: '9/16' }}
       onClick={onVideoClick}
+      onTouchStart={(e) => e.stopPropagation()}
     >
       {/* Video Element */}
       <video
@@ -93,8 +103,14 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         preload="metadata"
         onLoadedData={handleVideoLoad}
         onEnded={() => setIsPlaying(false)}
+        webkit-playsinline="true"
+        x5-video-player-type="h5"
+        x5-video-orientation="portraint"
+        x5-video-player-fullscreen="true"
+        controls={false}
       >
         <source src={video.videoUrl} type="video/mp4" />
+        <source src={video.videoUrl} type="video/webm" />
         Seu navegador não suporta vídeos.
       </video>
 
@@ -109,35 +125,41 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
       {!isPlaying && isLoaded && (
         <button
           onClick={togglePlay}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-all duration-200 hover:scale-110"
+          onTouchStart={togglePlay}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-12 md:h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-all duration-200 hover:scale-110 touch-manipulation"
+          style={{ minHeight: '44px', minWidth: '44px' }}
         >
-          <div className="w-0 h-0 border-l-[10px] border-l-white border-y-[6px] border-y-transparent ml-1"></div>
+          <div className="w-0 h-0 border-l-[12px] md:border-l-[10px] border-l-white border-y-[8px] md:border-y-[6px] border-y-transparent ml-1"></div>
         </button>
       )}
 
       {/* Video Controls Overlay - Only when playing */}
       {isPlaying && (
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
           {/* Pause Button */}
           <button
             onClick={togglePlay}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+            onTouchStart={togglePlay}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-12 md:h-12 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors touch-manipulation"
+            style={{ minHeight: '44px', minWidth: '44px' }}
           >
             <div className="flex space-x-1">
-              <div className="w-1.5 h-5 bg-white rounded"></div>
-              <div className="w-1.5 h-5 bg-white rounded"></div>
+              <div className="w-2 h-6 md:w-1.5 md:h-5 bg-white rounded"></div>
+              <div className="w-2 h-6 md:w-1.5 md:h-5 bg-white rounded"></div>
             </div>
           </button>
 
           {/* Mute/Unmute Button */}
           <button
             onClick={toggleMute}
-            className="absolute top-3 right-3 w-8 h-8 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+            onTouchStart={toggleMute}
+            className="absolute top-3 right-3 w-10 h-10 md:w-8 md:h-8 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors touch-manipulation"
+            style={{ minHeight: '44px', minWidth: '44px' }}
           >
             {isMuted ? (
-              <VolumeX className="w-4 h-4" />
+              <VolumeX className="w-5 h-5 md:w-4 md:h-4" />
             ) : (
-              <Volume2 className="w-4 h-4" />
+              <Volume2 className="w-5 h-5 md:w-4 md:h-4" />
             )}
           </button>
         </div>

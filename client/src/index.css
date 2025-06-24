@@ -319,6 +319,16 @@ body {
   opacity: 1;
 }
 
+/* Mobile video touch optimization */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* Mobile video optimizations */
 @media (max-width: 768px) {
   .video-reel {
