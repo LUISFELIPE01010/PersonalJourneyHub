@@ -22,6 +22,7 @@ Website para personal trainer com seção de vídeos do Instagram que apresenta 
 - Botão "Começar Agora" do quiz agora leva direto ao WhatsApp com cor vermelha
 - Implementado SEO completo: meta tags, schema markup, sitemap, robots.txt
 - Adicionadas otimizações de performance e segurança
+- Corrigidos bugs de interação nos vídeos no mobile (botões maiores, delays, touch optimization)
 - 2025-01-24: Otimizada imagem do Hero para carregamento rápido no mobile
 - Botão "Começar Agora" do quiz agora leva direto ao WhatsApp
 - Adicionadas otimizações CSS para GPU acceleration e rendering

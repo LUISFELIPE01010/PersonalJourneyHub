@@ -40,6 +40,7 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [showThumbnail, setShowThumbnail] = useState(true);
+  const [isInteracting, setIsInteracting] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Load thumbnail when video metadata is loaded
@@ -68,23 +69,41 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
     e.stopPropagation();
     e.preventDefault();
     
+    if (isInteracting) return; // Prevent multiple rapid taps
+    setIsInteracting(true);
+    
     const videoElement = videoRef.current;
-    if (!videoElement) return;
-
-    if (isPlaying) {
-      videoElement.pause();
-      setIsPlaying(false);
-    } else {
-      videoElement.muted = true;
-      setIsMuted(true);
-      setShowThumbnail(false);
-      videoElement.currentTime = 0; // Start from beginning
-      videoElement.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        setIsPlaying(false);
-      });
+    if (!videoElement) {
+      setIsInteracting(false);
+      return;
     }
+
+    setTimeout(() => {
+      if (isPlaying) {
+        videoElement.pause();
+        setIsPlaying(false);
+      } else {
+        videoElement.muted = true;
+        setIsMuted(true);
+        setShowThumbnail(false);
+        videoElement.currentTime = 0;
+        
+        const playVideo = async () => {
+          try {
+            await videoElement.play();
+            setIsPlaying(true);
+          } catch (error) {
+            console.log('Video play failed:', error);
+            setIsPlaying(false);
+          }
+        };
+        
+        playVideo();
+      }
+      
+      // Reset interaction state after delay
+      setTimeout(() => setIsInteracting(false), 200);
+    }, 50);
   };
 
   const toggleMute = (e: React.MouseEvent | React.TouchEvent) => {
@@ -93,8 +112,11 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
-    videoElement.muted = !videoElement.muted;
-    setIsMuted(videoElement.muted);
+    // Add delay for mobile touch
+    setTimeout(() => {
+      videoElement.muted = !videoElement.muted;
+      setIsMuted(videoElement.muted);
+    }, 50);
   };
 
   return (
@@ -114,8 +136,12 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
           setIsPlaying(false);
           setShowThumbnail(true);
         }}
-        style={{ backgroundColor: '#000' }}
-        poster="" // Remove default poster to show video frame
+        onCanPlay={() => setShowThumbnail(false)}
+        style={{ 
+          backgroundColor: '#000',
+          touchAction: 'none'
+        }}
+        poster=""
       >
         <source src={video.videoUrl} type="video/mp4" />
       </video>
@@ -131,9 +157,14 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
       {!isPlaying && (
         <button
           onClick={togglePlay}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-black/30 rounded-full flex items-center justify-center text-white z-10"
+          onTouchEnd={togglePlay}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white z-10 transition-all active:scale-95"
+          style={{ 
+            touchAction: 'manipulation',
+            WebkitTapHighlightColor: 'transparent'
+          }}
         >
-          <Play className="w-6 h-6 ml-1" fill="white" />
+          <Play className="w-8 h-8 md:w-6 md:h-6 ml-1" fill="white" />
         </button>
       )}
 
@@ -141,16 +172,26 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
       {isPlaying && (
         <button
           onClick={togglePlay}
+          onTouchEnd={togglePlay}
           className="absolute inset-0 bg-transparent z-10"
+          style={{ 
+            touchAction: 'manipulation',
+            WebkitTapHighlightColor: 'transparent'
+          }}
         />
       )}
 
       {/* Mute Button */}
       <button
         onClick={toggleMute}
-        className="absolute top-3 right-3 w-10 h-10 bg-black/30 rounded-full flex items-center justify-center text-white z-10"
+        onTouchEnd={toggleMute}
+        className="absolute top-3 right-3 w-12 h-12 md:w-10 md:h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white z-10 transition-all active:scale-95"
+        style={{ 
+          touchAction: 'manipulation',
+          WebkitTapHighlightColor: 'transparent'
+        }}
       >
-        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        {isMuted ? <VolumeX className="w-5 h-5 md:w-4 md:h-4" /> : <Volume2 className="w-5 h-5 md:w-4 md:h-4" />}
       </button>
 
       {/* Duration Badge */}
@@ -209,7 +250,9 @@ const InstagramVideos = () => {
     const touchEndX = e.changedTouches[0].clientX;
     const difference = touchStartX.current - touchEndX;
 
-    if (Math.abs(difference) > 50) {
+    // Only trigger swipe if movement is significant and we're in mobile mode
+    if (Math.abs(difference) > 80 && slidesToShow === 1) {
+      e.preventDefault();
       if (difference > 0 && currentIndex < videoPosts.length - 1) {
         setCurrentIndex(prev => prev + 1);
       } else if (difference < 0 && currentIndex > 0) {
@@ -263,6 +306,10 @@ const InstagramVideos = () => {
             className="overflow-hidden px-4"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
+            style={{
+              touchAction: 'pan-x',
+              WebkitOverflowScrolling: 'touch'
+            }}
           >
             <div 
               className="flex gap-4 transition-transform duration-300 ease-out"

@@ -96,6 +96,28 @@ h1, h2, h3, h4, h5, h6 {
     content-visibility: auto;
     contain-intrinsic-size: 320px 320px;
   }
+  
+  /* Video controls optimization for mobile */
+  video {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Button touch optimization */
+  button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Prevent zoom on double tap */
+  * {
+    touch-action: manipulation;
+  }
 }
 img[loading="lazy"] {
   will-change: auto;
