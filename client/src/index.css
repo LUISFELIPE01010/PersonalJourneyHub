@@ -167,6 +167,7 @@ img {
   border-radius: 16px;
   overflow: hidden;
   position: relative;
+  max-height: 450px;
 }
 
 .video-reel video {
@@ -174,6 +175,25 @@ img {
   height: 100%;
   object-fit: cover;
   border-radius: 16px;
+}
+
+/* Responsive video adjustments */
+@media (max-width: 1200px) {
+  .video-reel {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 900px) {
+  .video-reel {
+    max-height: 380px;
+  }
+}
+
+@media (max-width: 640px) {
+  .video-reel {
+    max-height: 500px;
+  }
 }
 
 /* Video controls styling */

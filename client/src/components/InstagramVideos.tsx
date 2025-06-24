@@ -175,9 +175,9 @@ const InstagramVideos = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 1200) {
         setSlidesToShow(4);
-      } else if (window.innerWidth >= 768) {
+      } else if (window.innerWidth >= 900) {
         setSlidesToShow(3);
       } else if (window.innerWidth >= 640) {
         setSlidesToShow(2);
@@ -298,13 +298,13 @@ const InstagramVideos = () => {
           {/* Videos Carousel with Touch Support */}
           <div 
             ref={carouselRef}
-            className="overflow-hidden px-4 md:px-0 touch-pan-x"
+            className="overflow-hidden px-4 md:px-6 lg:px-8 touch-pan-x"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
             <div 
-              className="flex transition-transform duration-300 ease-out gap-3 md:gap-4 lg:gap-6"
+              className="flex transition-transform duration-300 ease-out gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6"
               style={{
                 transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
               }}
@@ -314,7 +314,9 @@ const InstagramVideos = () => {
                   key={video.id} 
                   className="flex-shrink-0"
                   style={{ 
-                    width: `calc(${100 / slidesToShow}% - ${(slidesToShow - 1) * (slidesToShow === 1 ? 0 : 0.75)}rem / ${slidesToShow})`
+                    width: slidesToShow === 1 
+                      ? `calc(100% - 2rem)` 
+                      : `calc(${100 / slidesToShow}% - ${(slidesToShow - 1) * 1.25}rem / ${slidesToShow})`
                   }}
                 >
                   <VideoCard 
@@ -325,7 +327,7 @@ const InstagramVideos = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div></div>
 
           {/* Dots Indicator - Mobile only */}
           {maxIndex > 0 && (
@@ -356,17 +358,14 @@ const InstagramVideos = () => {
         <div className="text-center mt-8 md:mt-12">
           <Button 
             onClick={() => {
-              const contactSection = document.getElementById("contato");
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: "smooth" });
-              }
+              window.open("https://instagram.com/personaljuniornobrega", "_blank", "noopener,noreferrer");
             }}
             size="lg"
             className="px-6 py-3 md:px-8"
           >
-            Quero treinar com você
+            Veja mais dicas
           </Button>
-        </div>
+        </div></div>
       </div>
     </section>
   );
