@@ -1,76 +1,175 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
-import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 
 type VideoPost = {
   id: number;
   title: string;
-  thumbnail: string;
-  videoUrl?: string;
+  videoUrl: string;
+  duration: string;
 };
 
 const videoPosts: VideoPost[] = [
   {
     id: 1,
     title: "Treino de Força para Iniciantes",
-    thumbnail: "https://images.unsplash.com/photo-1571019613576-2b22c76fd955?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+    videoUrl: "/video1.mp4",
+    duration: "2:30"
   },
   {
     id: 2,
     title: "Exercícios de Cardio Eficazes",
-    thumbnail: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+    videoUrl: "/video2.mp4",
+    duration: "2:45"
   },
   {
     id: 3,
     title: "Técnicas de Alongamento",
-    thumbnail: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"
+    videoUrl: "/video3.mp4",
+    duration: "3:15"
+  },
+  {
+    id: 4,
+    title: "Treino Funcional",
+    videoUrl: "/video4.mp4",
+    duration: "2:50"
   }
 ];
 
-const VideoCard = ({ video }: { video: VideoPost }) => {
-  const [isHovered, setIsHovered] = useState(false);
+const VideoCard = ({ video, isActive, onVideoClick }: { 
+  video: VideoPost; 
+  isActive: boolean;
+  onVideoClick: () => void;
+}) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleVideoClick = () => {
-    // Aqui você pode adicionar a lógica para reproduzir o vídeo
-    console.log(`Playing video: ${video.title}`);
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    if (isActive && isLoaded) {
+      videoElement.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {
+        setIsPlaying(false);
+      });
+    } else {
+      videoElement.pause();
+      setIsPlaying(false);
+    }
+  }, [isActive, isLoaded]);
+
+  const handleVideoLoad = () => {
+    setIsLoaded(true);
+  };
+
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    if (isPlaying) {
+      videoElement.pause();
+      setIsPlaying(false);
+    } else {
+      videoElement.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {
+        setIsPlaying(false);
+      });
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    videoElement.muted = !videoElement.muted;
+    setIsMuted(videoElement.muted);
   };
 
   return (
     <div 
-      className="relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleVideoClick}
+      className="relative bg-black rounded-2xl overflow-hidden cursor-pointer group"
+      style={{ aspectRatio: '9/16' }}
+      onClick={onVideoClick}
     >
-      <div className="relative aspect-video bg-gray-100">
-        <img 
-          src={video.thumbnail}
-          alt={video.title}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
+      {/* Video Element */}
+      <video
+        ref={videoRef}
+        className="w-full h-full object-cover"
+        playsInline
+        muted={isMuted}
+        loop
+        preload="metadata"
+        onLoadedData={handleVideoLoad}
+        onEnded={() => setIsPlaying(false)}
+      >
+        <source src={video.videoUrl} type="video/mp4" />
+        Seu navegador não suporta vídeos.
+      </video>
 
-        {/* Play Button Overlay */}
-        <div className={`absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-70'}`}>
-          <div className={`bg-white bg-opacity-90 rounded-full p-3 md:p-4 transform transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}>
-            <Play className="w-6 h-6 md:w-8 md:h-8 text-primary fill-current" />
-          </div>
+      {/* Loading State */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gray-900 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
         </div>
+      )}
 
-        {/* Duration Badge (opcional) */}
-        <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
-          2:30
+      {/* Video Controls Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        {/* Play/Pause Button */}
+        <button
+          onClick={togglePlay}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+        >
+          {isPlaying ? (
+            <div className="flex space-x-1">
+              <div className="w-2 h-6 bg-white rounded"></div>
+              <div className="w-2 h-6 bg-white rounded"></div>
+            </div>
+          ) : (
+            <div className="w-0 h-0 border-l-[12px] border-l-white border-y-[8px] border-y-transparent ml-1"></div>
+          )}
+        </button>
+
+        {/* Mute/Unmute Button */}
+        <button
+          onClick={toggleMute}
+          className="absolute top-4 right-4 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+        >
+          {isMuted ? (
+            <VolumeX className="w-5 h-5" />
+          ) : (
+            <Volume2 className="w-5 h-5" />
+          )}
+        </button>
+
+        {/* Duration Badge */}
+        <div className="absolute bottom-4 right-4 bg-black/70 text-white text-xs px-2 py-1 rounded">
+          {video.duration}
         </div>
       </div>
 
-      <div className="p-4">
-        <h3 className="font-semibold text-gray-900 text-sm md:text-base line-clamp-2">
+      {/* Video Info */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+        <h3 className="font-semibold text-sm mb-1 line-clamp-2">
           {video.title}
         </h3>
-        <p className="text-xs md:text-sm text-gray-600 mt-2">
+        <p className="text-xs opacity-80">
           @personaljuniornobrega
         </p>
       </div>
+
+      {/* Active Video Indicator */}
+      {isActive && (
+        <div className="absolute top-2 left-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+      )}
     </div>
   );
 };
@@ -80,12 +179,15 @@ const InstagramVideos = () => {
   const [slidesToShow, setSlidesToShow] = useState(1);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
-        setSlidesToShow(3);
+        setSlidesToShow(4);
       } else if (window.innerWidth >= 768) {
+        setSlidesToShow(3);
+      } else if (window.innerWidth >= 640) {
         setSlidesToShow(2);
       } else {
         setSlidesToShow(1);
@@ -144,6 +246,14 @@ const InstagramVideos = () => {
     touchEndX.current = null;
   };
 
+  const handleVideoClick = (index: number) => {
+    // Se o vídeo clicado não está visível, role até ele
+    const videoIndex = index - currentIndex;
+    if (videoIndex < 0 || videoIndex >= slidesToShow) {
+      goToSlide(Math.max(0, Math.min(index, maxIndex)));
+    }
+  };
+
   return (
     <section className="py-16 md:py-20 bg-gradient-to-br from-white to-gray-50 section-fade">
       <div className="container-custom">
@@ -195,47 +305,59 @@ const InstagramVideos = () => {
 
           {/* Videos Carousel with Touch Support */}
           <div 
-            className="overflow-hidden px-4 md:px-0"
+            ref={carouselRef}
+            className="overflow-hidden px-4 md:px-0 touch-pan-x"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
             <div 
-              className="flex transition-transform duration-300 ease-out gap-4 md:gap-6"
+              className="flex transition-transform duration-300 ease-out gap-3 md:gap-4 lg:gap-6"
               style={{
                 transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
               }}
             >
-              {videoPosts.map((video) => (
+              {videoPosts.map((video, index) => (
                 <div 
                   key={video.id} 
                   className="flex-shrink-0"
                   style={{ 
-                    width: `calc(${100 / slidesToShow}% - ${(slidesToShow - 1) * (slidesToShow === 1 ? 0 : 1.5)}rem / ${slidesToShow})`
+                    width: `calc(${100 / slidesToShow}% - ${(slidesToShow - 1) * (slidesToShow === 1 ? 0 : 0.75)}rem / ${slidesToShow})`
                   }}
                 >
-                  <VideoCard video={video} />
+                  <VideoCard 
+                    video={video} 
+                    isActive={index >= currentIndex && index < currentIndex + slidesToShow}
+                    onVideoClick={() => handleVideoClick(index)}
+                  />
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Dots Indicator - Smaller on mobile */}
+          {/* Dots Indicator - Mobile only */}
           {maxIndex > 0 && (
-            <div className="flex justify-center mt-6 md:mt-8 space-x-1 md:space-x-2">
+            <div className="flex justify-center mt-6 md:mt-8 space-x-1 md:space-x-2 md:hidden">
               {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
                   className={`rounded-full transition-all duration-200 ${
                     index === currentIndex 
-                      ? 'bg-primary w-3 h-1.5 md:w-6 md:h-2' 
-                      : 'bg-gray-300 hover:bg-gray-400 w-1.5 h-1.5 md:w-2 md:h-2'
+                      ? 'bg-primary w-6 h-2' 
+                      : 'bg-gray-300 hover:bg-gray-400 w-2 h-2'
                   }`}
                 />
               ))}
             </div>
           )}
+
+          {/* Swipe hint for mobile */}
+          <div className="md:hidden text-center mt-4">
+            <p className="text-sm text-gray-500">
+              ← Deslize para ver mais vídeos →
+            </p>
+          </div>
         </div>
 
         {/* Call to Action */}

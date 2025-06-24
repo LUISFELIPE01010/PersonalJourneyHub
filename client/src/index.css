@@ -160,6 +160,83 @@ img {
   touch-action: pan-x;
 }
 
+/* Video reels styling */
+.video-reel {
+  aspect-ratio: 9 / 16;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.video-reel video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* Video controls styling */
+.video-controls {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.3) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-controls:hover,
+.video-controls.touch-active {
+  opacity: 1;
+}
+
+/* Mobile video optimizations */
+@media (max-width: 768px) {
+  .video-reel {
+    border-radius: 12px;
+  }
+  
+  .video-controls {
+    opacity: 0.7;
+  }
+  
+  /* Ensure smooth scrolling on mobile */
+  .touch-pan-x {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Performance optimizations for video */
+video {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Lazy loading spinner */
+.video-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.video-loading::after {
+  content: '';
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Mobile-first responsive improvements */
 @media (max-width: 768px) {
   .section-fade {
