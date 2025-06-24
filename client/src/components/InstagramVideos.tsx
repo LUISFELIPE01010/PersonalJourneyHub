@@ -39,7 +39,30 @@ const videoPosts: VideoPost[] = [
 const VideoCard = ({ video }: { video: VideoPost }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [showThumbnail, setShowThumbnail] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Load thumbnail when video metadata is loaded
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
+    const handleLoadedMetadata = () => {
+      videoElement.currentTime = 0.5; // Seek to 0.5 seconds for thumbnail
+    };
+
+    const handleSeeked = () => {
+      setShowThumbnail(false); // Hide thumbnail once seeked
+    };
+
+    videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
+    videoElement.addEventListener('seeked', handleSeeked);
+
+    return () => {
+      videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      videoElement.removeEventListener('seeked', handleSeeked);
+    };
+  }, []);
 
   const togglePlay = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
@@ -54,6 +77,8 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
     } else {
       videoElement.muted = true;
       setIsMuted(true);
+      setShowThumbnail(false);
+      videoElement.currentTime = 0; // Start from beginning
       videoElement.play().then(() => {
         setIsPlaying(true);
       }).catch(() => {
@@ -85,17 +110,22 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
         muted
         loop
         preload="metadata"
-        onEnded={() => setIsPlaying(false)}
-        onLoadedData={() => {
-          // Generate thumbnail from first frame
-          if (videoRef.current && !isPlaying) {
-            videoRef.current.currentTime = 0.1;
-          }
+        onEnded={() => {
+          setIsPlaying(false);
+          setShowThumbnail(true);
         }}
         style={{ backgroundColor: '#000' }}
+        poster="" // Remove default poster to show video frame
       >
         <source src={video.videoUrl} type="video/mp4" />
       </video>
+
+      {/* Loading overlay while thumbnail loads */}
+      {showThumbnail && (
+        <div className="absolute inset-0 bg-gray-800 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
 
       {/* Play Button */}
       {!isPlaying && (
@@ -180,10 +210,10 @@ const InstagramVideos = () => {
     const difference = touchStartX.current - touchEndX;
 
     if (Math.abs(difference) > 50) {
-      if (difference > 0 && currentIndex < maxIndex) {
-        nextSlide();
+      if (difference > 0 && currentIndex < videoPosts.length - 1) {
+        setCurrentIndex(prev => prev + 1);
       } else if (difference < 0 && currentIndex > 0) {
-        prevSlide();
+        setCurrentIndex(prev => prev - 1);
       }
     }
   };
@@ -227,30 +257,43 @@ const InstagramVideos = () => {
         )}
 
         {/* Carousel for all devices */}
-        <div 
-          ref={carouselRef}
-          className="overflow-hidden"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
+        <div className="relative">
           <div 
-            className="flex gap-4 md:gap-6 transition-transform duration-300 ease-out px-4 md:px-0"
-            style={{
-              transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
-            }}
+            ref={carouselRef}
+            className="overflow-hidden px-4"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
-            {videoPosts.map((video) => (
-              <div 
-                key={video.id} 
-                className="flex-shrink-0"
-                style={{ 
-                  width: slidesToShow === 1 
-                    ? `calc(100% - 2rem)` 
-                    : `calc(${100 / slidesToShow}% - 1.5rem)` 
-                }}
-              >
-                <VideoCard video={video} />
-              </div>
+            <div 
+              className="flex gap-4 transition-transform duration-300 ease-out"
+              style={{
+                transform: `translateX(-${currentIndex * 100}%)`,
+              }}
+            >
+              {videoPosts.map((video) => (
+                <div 
+                  key={video.id} 
+                  className="flex-shrink-0 w-full max-w-xs mx-auto"
+                  style={{ 
+                    width: slidesToShow === 1 ? '100%' : `${100 / slidesToShow}%`
+                  }}
+                >
+                  <VideoCard video={video} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dots indicator for mobile */}
+          <div className="flex justify-center mt-6 space-x-2">
+            {videoPosts.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  index === currentIndex ? 'bg-red-600' : 'bg-gray-300'
+                }`}
+              />
             ))}
           </div>
         </div>
