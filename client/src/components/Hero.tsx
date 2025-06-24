@@ -14,7 +14,7 @@ const Hero = () => {
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           {/* Mobile: Photo first, Desktop: Text first */}
-          <div className="lg:w-1/2 flex justify-center order-1 lg:order-2 scroll-reveal-right hero hero-container">
+          <div className="lg:w-1/2 flex justify-center order-1 lg:order-2 scroll-reveal-right hero">
             <img 
               src="/foto.png" 
               alt="Junior Nobrega - Personal trainer profissional em Santos especializado em treinos personalizados"
