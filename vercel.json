@@ -1,11 +1,11 @@
 {
-  "buildCommand": "echo 'Static site - no build needed'",
-  "outputDirectory": "public",
-  "installCommand": "echo 'No dependencies to install'",
-  "routes": [
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
