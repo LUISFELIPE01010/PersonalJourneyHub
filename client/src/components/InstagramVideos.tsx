@@ -167,14 +167,13 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         muted
         loop
         disablePictureInPicture
-        preload="none"
+        preload="metadata"
         onLoadedData={handleVideoLoad}
         onCanPlay={handleCanPlay}
         onError={handleVideoError}
         onEnded={() => setIsPlaying(false)}
         onLoadStart={() => setIsLoading(true)}
         style={{ backgroundColor: '#000' }}
-        poster={`data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400"><rect width="300" height="400" fill="#1a1a1a"/><circle cx="150" cy="200" r="40" fill="#333" stroke="#555" stroke-width="2"/><polygon points="135,185 135,215 165,200" fill="#777"/></svg>')}`}
       >
         <source src={video.videoUrl} type="video/mp4" />
         Seu navegador não suporta vídeos.
@@ -215,7 +214,7 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         <button
           onClick={togglePlay}
           onTouchEnd={togglePlay}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-red-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:from-red-600 hover:to-red-700 transition-all duration-200 hover:scale-105 touch-manipulation z-20 shadow-lg"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/40 transition-all duration-200 hover:scale-105 touch-manipulation z-20"
           style={{ minHeight: '48px', minWidth: '48px' }}
         >
           {!isPlaying ? (
@@ -234,24 +233,24 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         <button
           onClick={toggleMute}
           onTouchEnd={toggleMute}
-          className="absolute top-4 right-4 w-12 h-12 md:w-10 md:h-10 bg-gradient-to-br from-gray-800 to-gray-900 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:from-gray-700 hover:to-gray-800 transition-all duration-200 hover:scale-105 touch-manipulation z-20 shadow-lg"
+          className="absolute top-4 right-4 w-12 h-12 md:w-10 md:h-10 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/40 transition-all duration-200 hover:scale-105 touch-manipulation z-20"
           style={{ minHeight: '48px', minWidth: '48px' }}
         >
           {isMuted ? (
             <VolumeX className="w-6 h-6 md:w-5 md:h-5" />
           ) : (
-            <Volume2 className="w-6 h-6 md:w-5 md:h-5 text-red-400" />
+            <Volume2 className="w-6 h-6 md:w-5 md:h-5" />
           )}
         </button>
       )}
 
       {/* Duration Badge */}
-      <div className="absolute bottom-16 right-3 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs px-3 py-1 rounded-full font-medium shadow-lg">
+      <div className="absolute bottom-16 right-3 bg-black/30 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium">
         {video.duration}
       </div>
 
       {/* Video Info Overlay */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-white">
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-4 text-white">
         <h3 className="font-bold text-sm md:text-base mb-1 line-clamp-2 leading-tight">
           {video.title}
         </h3>
@@ -267,7 +266,7 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
 
       {/* Video Quality Indicator */}
       {isLoaded && !hasError && (
-        <div className="absolute top-3 right-14 md:right-12 bg-black/70 backdrop-blur-sm text-white text-xs px-2 py-1 rounded font-medium">
+        <div className="absolute top-3 right-14 md:right-12 bg-black/30 backdrop-blur-sm text-white text-xs px-2 py-1 rounded font-medium">
           HD
         </div>
       )}

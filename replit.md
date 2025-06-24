@@ -7,6 +7,8 @@ Website para personal trainer com seção de vídeos do Instagram que apresenta 
 - Usuário fala português brasileiro
 - Prioriza funcionamento perfeito no mobile
 - Quer vídeos que carreguem rapidamente sem travamentos
+- Prefere botões com opacidade baixa/transparentes
+- Quer thumbnails reais dos vídeos, não tela cinza
 
 ## Recent Changes
 - 2024-12-24: Corrigido problemas de vídeos no mobile
