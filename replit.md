@@ -10,11 +10,13 @@ Website para personal trainer com seção de vídeos do Instagram que apresenta 
 
 ## Recent Changes
 - 2024-12-24: Corrigido problemas de vídeos no mobile
-- Implementado lazy loading com Intersection Observer
+- Implementado lazy loading inteligente
 - Melhorado controle de touch para mobile
-- Adicionado tratamento de erro robusto
+- Adicionado tratamento de erro robusto com retry
 - Otimizado preload apenas para vídeos ativos
-- Corrigido atributos inválidos do HTML5 video
+- Design visual aprimorado com gradientes e sombras
+- Botões com cores atrativas (vermelho para play/pause)
+- Indicadores visuais melhorados (HD, duração, ativo)
 
 ## Project Architecture  
 - Frontend: React/TypeScript com Vite

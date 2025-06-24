@@ -46,38 +46,29 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
   const [isMuted, setIsMuted] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Reset error state when video changes
+  // Reset states when video changes
   useEffect(() => {
     setHasError(false);
     setIsLoaded(false);
     setIsPlaying(false);
+    setIsLoading(false);
   }, [video.id]);
 
-  // Intersection Observer for lazy loading
+  // Load video when it becomes active
   useEffect(() => {
     const videoElement = videoRef.current;
-    if (!videoElement || !isActive) return;
+    if (!videoElement || !isActive || isLoaded || hasError || isLoading) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !isLoaded && !hasError) {
-            // Load video when it comes into view
-            videoElement.load();
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(videoElement);
-    return () => observer.disconnect();
-  }, [isActive, isLoaded, hasError]);
+    setIsLoading(true);
+    videoElement.load();
+  }, [isActive, isLoaded, hasError, isLoading]);
 
   const handleVideoLoad = () => {
     setIsLoaded(true);
+    setIsLoading(false);
     setHasError(false);
   };
 
@@ -85,6 +76,12 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
     setHasError(true);
     setIsLoaded(false);
     setIsPlaying(false);
+    setIsLoading(false);
+  };
+
+  const handleCanPlay = () => {
+    setIsLoaded(true);
+    setIsLoading(false);
   };
 
   const togglePlay = async (e: React.MouseEvent | React.TouchEvent) => {
@@ -99,45 +96,47 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
         videoElement.pause();
         setIsPlaying(false);
       } else {
-        // Ensure video is muted for mobile autoplay
-        videoElement.muted = true;
-        setIsMuted(true);
-        
-        // For mobile devices, add a small delay to ensure proper loading
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        if (isMobile && videoElement.readyState < 2) {
+        // Ensure video is ready
+        if (videoElement.readyState < 2) {
+          setIsLoading(true);
           videoElement.load();
           
-          // Wait for video to be ready
           await new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => reject(new Error('Video load timeout')), 5000);
+            const timeout = setTimeout(() => reject(new Error('Timeout')), 3000);
             
-            videoElement.onloadeddata = () => {
+            const onReady = () => {
               clearTimeout(timeout);
+              videoElement.removeEventListener('canplay', onReady);
+              videoElement.removeEventListener('error', onError);
               resolve(true);
             };
             
-            videoElement.onerror = () => {
+            const onError = () => {
               clearTimeout(timeout);
-              reject(new Error('Video load error'));
+              videoElement.removeEventListener('canplay', onReady);
+              videoElement.removeEventListener('error', onError);
+              reject(new Error('Load error'));
             };
+            
+            videoElement.addEventListener('canplay', onReady);
+            videoElement.addEventListener('error', onError);
           });
           
-          // Small delay for mobile stability
-          await new Promise(resolve => setTimeout(resolve, 100));
+          setIsLoading(false);
         }
         
-        const playPromise = videoElement.play();
-        if (playPromise) {
-          await playPromise;
-        }
+        // Ensure muted for autoplay
+        videoElement.muted = true;
+        setIsMuted(true);
+        
+        await videoElement.play();
         setIsPlaying(true);
       }
     } catch (error) {
       console.log('Video play failed:', error);
       setIsPlaying(false);
-      if (error.message !== 'Video load timeout') {
+      setIsLoading(false);
+      if (error.message !== 'Timeout') {
         setHasError(true);
       }
     }
@@ -147,7 +146,7 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
     e.stopPropagation();
     e.preventDefault();
     const videoElement = videoRef.current;
-    if (!videoElement) return;
+    if (!videoElement || !isLoaded) return;
 
     videoElement.muted = !videoElement.muted;
     setIsMuted(videoElement.muted);
@@ -155,7 +154,7 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
 
   return (
     <div 
-      className="relative bg-black rounded-2xl overflow-hidden cursor-pointer group touch-manipulation"
+      className="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl overflow-hidden cursor-pointer group touch-manipulation shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
       style={{ aspectRatio: '9/16' }}
       onClick={onVideoClick}
       onTouchStart={(e) => e.stopPropagation()}
@@ -163,112 +162,114 @@ const VideoCard = ({ video, isActive, onVideoClick }: {
       {/* Video Element */}
       <video
         ref={videoRef}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover transition-opacity duration-300"
         playsInline
         muted
         loop
         disablePictureInPicture
-        preload={isActive ? "metadata" : "none"}
+        preload="none"
         onLoadedData={handleVideoLoad}
+        onCanPlay={handleCanPlay}
         onError={handleVideoError}
         onEnded={() => setIsPlaying(false)}
-        onLoadStart={() => setIsLoaded(false)}
-        onCanPlay={() => setIsLoaded(true)}
+        onLoadStart={() => setIsLoading(true)}
         style={{ backgroundColor: '#000' }}
-        poster={`data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400"><rect width="300" height="400" fill="#1a1a1a"/><circle cx="150" cy="200" r="30" fill="#666"/><polygon points="140,185 140,215 170,200" fill="#999"/></svg>')}`}
+        poster={`data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400"><rect width="300" height="400" fill="#1a1a1a"/><circle cx="150" cy="200" r="40" fill="#333" stroke="#555" stroke-width="2"/><polygon points="135,185 135,215 165,200" fill="#777"/></svg>')}`}
       >
         <source src={video.videoUrl} type="video/mp4" />
         Seu navegador não suporta vídeos.
       </video>
 
-      {/* Loading/Error State */}
-      {!isLoaded && !hasError && (
-        <div className="absolute inset-0 bg-gray-900 flex flex-col items-center justify-center">
-          <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mb-2"></div>
-          <p className="text-white text-xs opacity-70">Carregando...</p>
+      {/* Loading State */}
+      {(isLoading || (!isLoaded && !hasError && isActive)) && (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 flex flex-col items-center justify-center">
+          <div className="w-12 h-12 border-3 border-red-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+          <p className="text-white text-sm font-medium opacity-90">Carregando vídeo...</p>
         </div>
       )}
 
       {/* Error State */}
       {hasError && (
-        <div className="absolute inset-0 bg-gray-900 flex flex-col items-center justify-center">
-          <div className="w-8 h-8 text-white mb-2">⚠️</div>
-          <p className="text-white text-xs opacity-70 text-center px-2">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 flex flex-col items-center justify-center">
+          <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mb-3">
+            <div className="text-red-400 text-2xl">⚠️</div>
+          </div>
+          <p className="text-white text-sm font-medium opacity-90 text-center px-4 mb-3">
             Erro ao carregar vídeo
           </p>
           <button 
             onClick={() => {
               setHasError(false);
+              setIsLoading(true);
               videoRef.current?.load();
             }}
-            className="mt-2 text-xs text-blue-400 underline"
+            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg font-medium transition-colors"
           >
             Tentar novamente
           </button>
         </div>
       )}
 
-      {/* Play Button - Always Visible when not playing */}
-      {!isPlaying && isLoaded && !hasError && (
+      {/* Play/Pause Button - Center */}
+      {isLoaded && !hasError && (
         <button
           onClick={togglePlay}
           onTouchEnd={togglePlay}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-all duration-200 hover:scale-105 touch-manipulation z-10"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-red-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:from-red-600 hover:to-red-700 transition-all duration-200 hover:scale-105 touch-manipulation z-20 shadow-lg"
           style={{ minHeight: '48px', minWidth: '48px' }}
         >
-          <div className="w-0 h-0 border-l-[16px] md:border-l-[12px] border-l-white border-y-[10px] md:border-y-[8px] border-y-transparent ml-1"></div>
+          {!isPlaying ? (
+            <div className="w-0 h-0 border-l-[16px] md:border-l-[12px] border-l-white border-y-[10px] md:border-y-[8px] border-y-transparent ml-1"></div>
+          ) : (
+            <div className="flex space-x-1.5">
+              <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
+              <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
+            </div>
+          )}
         </button>
       )}
 
-      {/* Pause Button - Visible when playing */}
-      {isPlaying && (
-        <button
-          onClick={togglePlay}
-          onTouchEnd={togglePlay}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-all duration-200 hover:scale-105 touch-manipulation z-10 opacity-80 md:opacity-0 md:group-hover:opacity-80"
-          style={{ minHeight: '48px', minWidth: '48px' }}
-        >
-          <div className="flex space-x-1.5">
-            <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
-            <div className="w-2.5 h-7 md:w-2 md:h-6 bg-white rounded"></div>
-          </div>
-        </button>
-      )}
-
-      {/* Mute/Unmute Button - Always visible */}
+      {/* Mute/Unmute Button - Top Right */}
       {isLoaded && !hasError && (
         <button
           onClick={toggleMute}
           onTouchEnd={toggleMute}
-          className="absolute top-4 right-4 w-12 h-12 md:w-10 md:h-10 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors touch-manipulation z-10"
+          className="absolute top-4 right-4 w-12 h-12 md:w-10 md:h-10 bg-gradient-to-br from-gray-800 to-gray-900 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:from-gray-700 hover:to-gray-800 transition-all duration-200 hover:scale-105 touch-manipulation z-20 shadow-lg"
           style={{ minHeight: '48px', minWidth: '48px' }}
         >
           {isMuted ? (
             <VolumeX className="w-6 h-6 md:w-5 md:h-5" />
           ) : (
-            <Volume2 className="w-6 h-6 md:w-5 md:h-5" />
+            <Volume2 className="w-6 h-6 md:w-5 md:h-5 text-red-400" />
           )}
         </button>
       )}
 
       {/* Duration Badge */}
-      <div className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm">
+      <div className="absolute bottom-16 right-3 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs px-3 py-1 rounded-full font-medium shadow-lg">
         {video.duration}
       </div>
 
-      {/* Video Info */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-        <h3 className="font-semibold text-sm mb-1 line-clamp-2">
+      {/* Video Info Overlay */}
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-white">
+        <h3 className="font-bold text-sm md:text-base mb-1 line-clamp-2 leading-tight">
           {video.title}
         </h3>
-        <p className="text-xs opacity-80">
+        <p className="text-xs md:text-sm opacity-90 font-medium">
           @personaljuniornobrega
         </p>
       </div>
 
       {/* Active Video Indicator */}
       {isActive && (
-        <div className="absolute top-2 left-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+        <div className="absolute top-3 left-3 w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg border-2 border-white"></div>
+      )}
+
+      {/* Video Quality Indicator */}
+      {isLoaded && !hasError && (
+        <div className="absolute top-3 right-14 md:right-12 bg-black/70 backdrop-blur-sm text-white text-xs px-2 py-1 rounded font-medium">
+          HD
+        </div>
       )}
     </div>
   );
@@ -421,7 +422,7 @@ const InstagramVideos = () => {
             style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch' }}
           >
             <div 
-              className="flex transition-transform duration-300 ease-out gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6"
+              className="flex transition-transform duration-500 ease-out gap-3 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8"
               style={{
                 transform: `translateX(-${currentIndex * (100 / slidesToShow)}%)`,
               }}
@@ -436,8 +437,8 @@ const InstagramVideos = () => {
                     className="flex-shrink-0"
                     style={{ 
                       width: slidesToShow === 1 
-                        ? `calc(100% - 2rem)` 
-                        : `calc(${100 / slidesToShow}% - ${(slidesToShow - 1) * 1.25}rem / ${slidesToShow})`
+                        ? `calc(100% - 1.5rem)` 
+                        : `calc(${100 / slidesToShow}% - ${(slidesToShow - 1) * 1.5}rem / ${slidesToShow})`
                     }}
                   >
                     <VideoCard 
