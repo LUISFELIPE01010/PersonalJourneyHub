@@ -190,21 +190,6 @@ const Testimonials = () => {
           </div>
         </div>
         
-        {/* Dots Navigation */}
-        <div className="mt-8 md:mt-12 flex justify-center">
-          <div className="flex space-x-1.5">
-            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-              <button
-                key={index}
-                className={`w-1.5 h-1.5 md:w-3 md:h-3 rounded-full transition-colors ${
-                  currentIndex === index ? "bg-primary" : "bg-gray-300"
-                }`}
-                onClick={() => goToSlide(index)}
-              />
-            ))}
-          </div>
-        </div>
-
         {/* Mobile Navigation Hint */}
         <div className="md:hidden text-center mt-4">
           <p className="text-sm text-gray-600">
