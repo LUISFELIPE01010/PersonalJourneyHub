@@ -11,16 +11,13 @@ Website para personal trainer com seção de vídeos do Instagram que apresenta 
 - Quer thumbnails reais dos vídeos, não tela cinza
 
 ## Recent Changes
-- 2024-12-24: Corrigido problemas de vídeos no mobile
-- Implementado lazy loading inteligente
-- Melhorado controle de touch para mobile
-- Adicionado tratamento de erro robusto com retry
-- Otimizado preload apenas para vídeos ativos
-- Design visual aprimorado com gradientes e sombras
-- Botões transparentes conforme solicitado
-- Botão play some após clicar (não fica sobre o vídeo)
-- Corrigido swipe/touch no mobile para navegação fluida
-- Resolvido travamento de scroll na seção de vídeos
+- 2024-12-24: Reescrito completamente componente de vídeos
+- Mobile: Grid simples sem carousel (elimina bugs de formatação)
+- Desktop: Carousel com navegação por botões
+- Componente VideoCard simplificado para máxima compatibilidade
+- Removido sistema complexo de touch/swipe que causava travamentos
+- Layout responsivo com estratégias diferentes para mobile/desktop
+- Eliminado carregamento infinito com preload inteligente
 
 ## Project Architecture  
 - Frontend: React/TypeScript com Vite
