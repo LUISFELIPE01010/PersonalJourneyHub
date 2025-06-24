@@ -1,11 +1,10 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type InstagramPost = {
   id: number;
-  title: string;
-  description: string;
   embedUrl: string;
   postId: string;
 };
@@ -13,24 +12,18 @@ type InstagramPost = {
 const instagramPosts: InstagramPost[] = [
   {
     id: 1,
-    title: "Condicionamento Físico",
-    description: "Exercícios para melhorar seu condicionamento geral",
     embedUrl: "https://www.instagram.com/reel/DIzLyKdx5h2/",
     postId: "DIzLyKdx5h2"
   },
   {
     id: 2,
-    title: "Performance Avançada",
-    description: "Dicas avançadas para atletas e praticantes experientes",
-    embedUrl: "https://www.instagram.com/reel/DHv96xnR4ko/",
-    postId: "DHv96xnR4ko"
+    embedUrl: "https://www.instagram.com/reel/DIJQ0fGRdrn/",
+    postId: "DIJQ0fGRdrn"
   },
   {
     id: 3,
-    title: "Novo Treino",
-    description: "Últimas técnicas e dicas de treino para máximos resultados",
-    embedUrl: "https://www.instagram.com/reel/DIJQ0fGRdrn/",
-    postId: "DIJQ0fGRdrn"
+    embedUrl: "https://www.instagram.com/reel/DHv96xnR4ko/",
+    postId: "DHv96xnR4ko"
   }
 ];
 
@@ -47,11 +40,11 @@ const InstagramPostCard = ({ post }: { post: InstagramPost }) => {
 
   return (
     <div className="w-full max-w-sm mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-      <div className="p-3">
-        <div className="bg-gray-50 rounded-lg p-2">
+      <div className="p-2">
+        <div className="bg-gray-50 rounded-lg p-1">
           <div 
             className="instagram-embed-container"
-            style={{ minHeight: '400px' }}
+            style={{ minHeight: '300px' }}
           >
             <blockquote 
               className="instagram-media" 
@@ -64,8 +57,8 @@ const InstagramPostCard = ({ post }: { post: InstagramPost }) => {
                 borderRadius: '3px',
                 boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
                 margin: '1px',
-                maxWidth: '400px',
-                minWidth: '326px',
+                maxWidth: '540px',
+                minWidth: '280px',
                 padding: 0,
                 width: '99.375%'
               }}
@@ -254,13 +247,13 @@ const InstagramVideos = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-white to-gray-50 section-fade">
+    <section className="py-16 md:py-20 bg-gradient-to-br from-white to-gray-50 section-fade">
       <div className="container-custom">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
             Dicas de Treino no Instagram
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-4 md:mb-6 px-4">
             Acompanhe nossos vídeos com dicas práticas, exercícios e técnicas para maximizar seus resultados
           </p>
           <a 
@@ -270,14 +263,14 @@ const InstagramVideos = () => {
             className="inline-flex items-center space-x-2 text-pink-600 hover:text-pink-700 font-medium transition-colors"
           >
             <span>@personaljuniornobrega</span>
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
             </svg>
           </a>
         </div>
 
         <div className="relative">
-          {/* Navigation Buttons - Smaller on mobile */}
+          {/* Navigation Buttons - Hidden on mobile */}
           {maxIndex > 0 && (
             <>
               <Button
@@ -285,9 +278,9 @@ const InstagramVideos = () => {
                 disabled={currentIndex === 0}
                 variant="outline"
                 size="icon"
-                className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white disabled:opacity-50 w-8 h-8 md:w-12 md:h-12 md:-ml-6 hidden md:flex"
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white disabled:opacity-50 w-10 h-10 md:w-12 md:h-12 md:-ml-6 hidden md:flex"
               >
-                <ChevronLeft className="w-3 h-3 md:w-5 md:h-5" />
+                <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
               </Button>
 
               <Button
@@ -295,16 +288,16 @@ const InstagramVideos = () => {
                 disabled={currentIndex >= maxIndex}
                 variant="outline"
                 size="icon"
-                className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white disabled:opacity-50 w-8 h-8 md:w-12 md:h-12 md:-mr-6 hidden md:flex"
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white disabled:opacity-50 w-10 h-10 md:w-12 md:h-12 md:-mr-6 hidden md:flex"
               >
-                <ChevronRight className="w-3 h-3 md:w-5 md:h-5" />
+                <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
               </Button>
             </>
           )}
 
           {/* Posts Carousel with Touch Support */}
           <div 
-            className="overflow-hidden"
+            className="overflow-hidden px-4 md:px-0"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -318,7 +311,7 @@ const InstagramVideos = () => {
               {instagramPosts.map((post) => (
                 <div 
                   key={post.id} 
-                  className="flex-shrink-0 px-2 md:px-3"
+                  className="flex-shrink-0 px-1 md:px-2"
                   style={{ 
                     width: `${100 / slidesToShow}%`
                   }}
@@ -329,17 +322,17 @@ const InstagramVideos = () => {
             </div>
           </div>
 
-          {/* Dots Indicator - Ultra small on mobile */}
+          {/* Dots Indicator - Smaller on mobile */}
           {maxIndex > 0 && (
-            <div className="flex justify-center mt-8 space-x-1 md:space-x-2">
+            <div className="flex justify-center mt-6 md:mt-8 space-x-1 md:space-x-2">
               {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
                   className={`rounded-full transition-all duration-200 ${
                     index === currentIndex 
-                      ? 'bg-primary w-2 h-1 md:w-6 md:h-2' 
-                      : 'bg-gray-300 hover:bg-gray-400 w-1 h-1 md:w-2 md:h-2'
+                      ? 'bg-primary w-3 h-1.5 md:w-6 md:h-2' 
+                      : 'bg-gray-300 hover:bg-gray-400 w-1.5 h-1.5 md:w-2 md:h-2'
                   }`}
                 />
               ))}
@@ -348,7 +341,7 @@ const InstagramVideos = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-8 md:mt-12">
           <Button 
             onClick={() => {
               const contactSection = document.getElementById("contato");
@@ -357,7 +350,7 @@ const InstagramVideos = () => {
               }
             }}
             size="lg"
-            className="px-8 py-3"
+            className="px-6 py-3 md:px-8"
           >
             Quero treinar com você
           </Button>

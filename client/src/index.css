@@ -172,11 +172,24 @@ img {
 
   /* Instagram section mobile optimization */
   .instagram-embed-container {
-    min-height: 350px !important;
+    min-height: 300px !important;
+  }
+
+  .instagram-media {
+    min-width: 280px !important;
+    max-width: 320px !important;
+  }
+}
+
+/* Ultra small mobile optimization */
+@media (max-width: 480px) {
+  .instagram-embed-container {
+    min-height: 280px !important;
   }
 
   .instagram-media {
     min-width: 260px !important;
+    max-width: 300px !important;
   }
 }
 
