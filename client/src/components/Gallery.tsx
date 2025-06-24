@@ -2,13 +2,13 @@ const Gallery = () => {
   return (
     <section className="py-20 section-fade scroll-reveal">
       <div className="container-custom">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 scroll-reveal">
           <h2 className="section-title">Transformação Real</h2>
           <div className="section-divider"></div>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-          <div className="group animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <div className="group scroll-reveal">
             <img 
               src="/corre.jpg" 
               alt="Aluno em treinamento" 
@@ -18,7 +18,7 @@ const Gallery = () => {
             />
           </div>
           
-          <div className="group animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="group scroll-reveal">
             <img 
               src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" 
               alt="Treino de resistência" 
@@ -28,7 +28,7 @@ const Gallery = () => {
             />
           </div>
           
-          <div className="group animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="group scroll-reveal">
             <img 
               src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" 
               alt="Treino funcional" 
@@ -38,7 +38,7 @@ const Gallery = () => {
             />
           </div>
           
-          <div className="group animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="group scroll-reveal">
             <img 
               src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" 
               alt="Treino personalizado" 

@@ -22,7 +22,7 @@ const Benefits = () => {
   return (
     <section id="beneficios" className="py-16 md:py-20 section-fade scroll-reveal">
       <div className="container-custom">
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-12 md:mb-16 scroll-reveal">
           <h2 className="section-title">Onde você pode treinar comigo</h2>
           <div className="section-divider"></div>
           <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto mt-4">
@@ -30,24 +30,30 @@ const Benefits = () => {
           </p>
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 animate-fade-in-up">
-          <BenefitCard 
-            image="/iron.webp" 
-            title="Ironberg Alphaville" 
-            description="Academia completa e moderna no coração de Alphaville, com equipamentos de última geração e ambiente motivador para seus treinos."
-          />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+          <div className="scroll-reveal">
+            <BenefitCard 
+              image="/iron.webp" 
+              title="Ironberg Alphaville" 
+              description="Academia completa e moderna no coração de Alphaville, com equipamentos de última geração e ambiente motivador para seus treinos."
+            />
+          </div>
           
-          <BenefitCard 
-            image="/academia.jpg" 
-            title="Treino Particular em Condomínios" 
-            description="Atendimento personalizado na academia do seu condomínio, com toda comodidade e privacidade que você merece."
-          />
+          <div className="scroll-reveal">
+            <BenefitCard 
+              image="/academia.jpg" 
+              title="Treino Particular em Condomínios" 
+              description="Atendimento personalizado na academia do seu condomínio, com toda comodidade e privacidade que você merece."
+            />
+          </div>
           
-          <BenefitCard 
-            image="/ead.png" 
-            title="Treinamento Online" 
-            description="Acompanhamento personalizado à distância com planos de treino customizados e suporte contínuo."
-          />
+          <div className="scroll-reveal">
+            <BenefitCard 
+              image="/ead.png" 
+              title="Treinamento Online" 
+              description="Acompanhamento personalizado à distância com planos de treino customizados e suporte contínuo."
+            />
+          </div>
         </div>
       </div>
     </section>

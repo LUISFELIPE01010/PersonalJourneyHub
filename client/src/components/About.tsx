@@ -19,13 +19,13 @@ const About = () => {
   return (
     <section id="sobre" className="py-16 md:py-20 bg-secondary section-fade scroll-reveal">
       <div className="container-custom">
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-12 md:mb-16 scroll-reveal">
           <h2 className="section-title">Quem é Junior Nobrega</h2>
           <div className="section-divider"></div>
         </div>
         
         <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-12 lg:gap-16">
-          <div className="lg:w-2/5 w-full">
+          <div className="lg:w-2/5 w-full scroll-reveal-left">
             <img 
               src="/fotojunior.png" 
               alt="Junior Nobrega, Personal Trainer" 
@@ -33,7 +33,7 @@ const About = () => {
             />
           </div>
           
-          <div className="lg:w-3/5 w-full">
+          <div className="lg:w-3/5 w-full scroll-reveal-right">
             <p className="text-base md:text-lg mb-6 md:mb-8 leading-relaxed">
               Sou Junior Nobrega, personal trainer formado em Educação Física, e minha missão é transformar sua vida através da atividade física.
             </p>

@@ -14,7 +14,7 @@ const Hero = () => {
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           {/* Mobile: Photo first, Desktop: Text first */}
-          <div className="lg:w-1/2 flex justify-center order-1 lg:order-2">
+          <div className="lg:w-1/2 flex justify-center order-1 lg:order-2 scroll-reveal-right">
             <img 
               src="/foto.png" 
               alt="Personal trainer Junior Nobrega" 
@@ -23,7 +23,7 @@ const Hero = () => {
               decoding="async"
             />
           </div>
-          <div className="lg:w-1/2 text-center lg:text-left order-2 lg:order-1">
+          <div className="lg:w-1/2 text-center lg:text-left order-2 lg:order-1 scroll-reveal-left">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
               <span className="block">+<CountUp end={100} duration={4} /> alunos já</span>
               <span className="block text-primary">transformam suas vidas!</span>
