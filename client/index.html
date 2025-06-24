@@ -77,13 +77,20 @@
     <!-- Fonts with performance optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
     
     <!-- Performance hints -->
     <link rel="dns-prefetch" href="//www.instagram.com">
     <link rel="dns-prefetch" href="//wa.me">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="preload" href="/foto.png" as="image" fetchpriority="high">
+    <link rel="modulepreload" href="/src/main.tsx">
+    
+    <!-- Resource hints for better loading -->
     <link rel="prefetch" href="/video1.mp4">
+    <link rel="prefetch" href="/video2.mp4" media="(min-width: 768px)">
     
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" sizes="any">

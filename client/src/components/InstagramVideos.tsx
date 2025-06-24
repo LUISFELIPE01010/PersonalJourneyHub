@@ -43,23 +43,38 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
   const [isInteracting, setIsInteracting] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Load thumbnail when video metadata is loaded
+  // Load thumbnail only when needed (lazy loading)
   useEffect(() => {
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            videoElement.preload = 'metadata';
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(videoElement);
+
     const handleLoadedMetadata = () => {
-      videoElement.currentTime = 0.5; // Seek to 0.5 seconds for thumbnail
+      videoElement.currentTime = 0.5;
     };
 
     const handleSeeked = () => {
-      setShowThumbnail(false); // Hide thumbnail once seeked
+      setShowThumbnail(false);
     };
 
     videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
     videoElement.addEventListener('seeked', handleSeeked);
 
     return () => {
+      observer.disconnect();
       videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
       videoElement.removeEventListener('seeked', handleSeeked);
     };
@@ -131,7 +146,7 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
         playsInline
         muted
         loop
-        preload="metadata"
+        preload="none"
         onEnded={() => {
           setIsPlaying(false);
           setShowThumbnail(true);

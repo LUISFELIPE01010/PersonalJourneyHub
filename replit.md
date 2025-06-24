@@ -23,6 +23,10 @@ Website para personal trainer com seção de vídeos do Instagram que apresenta 
 - Implementado SEO completo: meta tags, schema markup, sitemap, robots.txt
 - Adicionadas otimizações de performance e segurança
 - Corrigidos bugs de interação nos vídeos no mobile (botões maiores, delays, touch optimization)
+- Implementadas otimizações de performance: lazy loading, code splitting, preload crítico
+- Fontes otimizadas para carregamento assíncrono
+- Vídeos com preload="none" para carregamento sob demanda
+- Build otimizado com chunks separados e minificação avançada
 - 2025-01-24: Otimizada imagem do Hero para carregamento rápido no mobile
 - Botão "Começar Agora" do quiz agora leva direto ao WhatsApp
 - Adicionadas otimizações CSS para GPU acceleration e rendering

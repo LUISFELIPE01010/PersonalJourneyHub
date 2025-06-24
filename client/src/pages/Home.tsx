@@ -4,15 +4,13 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import About from "../components/About";
 import Benefits from "../components/Benefits";
-import Testimonials from "../components/Testimonials";
 import MotivationalQuote from "../components/MotivationalQuote";
-import Gallery from "../components/Gallery";
 import Quiz from "../components/Quiz";
-import InstagramVideos from "../components/InstagramVideos";
 import CallToAction from "../components/CallToAction";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
+import { LazySection, LazyTestimonials, LazyGallery, LazyInstagramVideos } from "../components/LazySection";
 
 export default function Home() {
   const sectionsRef = useRef<HTMLElement[]>([]);
@@ -58,11 +56,17 @@ export default function Home() {
       <Hero />
       <About />
       <Benefits />
-      <Quiz />
-      <Testimonials />
-      <InstagramVideos />
+      <LazySection height="600px">
+        <LazyTestimonials />
+      </LazySection>
       <MotivationalQuote />
-      <Gallery />
+      <LazySection height="500px">
+        <LazyGallery />
+      </LazySection>
+      <Quiz />
+      <LazySection height="700px">
+        <LazyInstagramVideos />
+      </LazySection>
       <CallToAction />
       <Footer />
       <WhatsAppButton />
