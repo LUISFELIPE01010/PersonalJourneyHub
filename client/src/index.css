@@ -47,7 +47,35 @@ img {
   display: block;
 }
 
+/* Image loading optimizations for mobile */
+img[loading="eager"] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 /* Performance optimizations */
+.transform-gpu {
+  transform: translateZ(0);
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  img {
+    image-rendering: optimizeQuality;
+    -webkit-optimize-contrast: auto;
+  }
+  
+  /* Reduce memory usage on mobile */
+  .hero img {
+    content-visibility: auto;
+    contain-intrinsic-size: 320px 320px;
+  }
+}
 img[loading="lazy"] {
   will-change: auto;
   transition: opacity 0.3s ease;

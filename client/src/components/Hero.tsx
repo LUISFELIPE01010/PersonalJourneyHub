@@ -14,13 +14,19 @@ const Hero = () => {
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           {/* Mobile: Photo first, Desktop: Text first */}
-          <div className="lg:w-1/2 flex justify-center order-1 lg:order-2 scroll-reveal-right">
+          <div className="lg:w-1/2 flex justify-center order-1 lg:order-2 scroll-reveal-right hero">
             <img 
               src="/foto.png" 
               alt="Personal trainer Junior Nobrega" 
-              className="rounded-xl shadow-lg w-80 h-80 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem] object-cover"
+              className="rounded-xl shadow-lg w-80 h-80 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem] object-cover transform-gpu will-change-transform"
               loading="eager"
               decoding="async"
+              fetchpriority="high"
+              style={{
+                contentVisibility: 'auto',
+                containIntrinsicSize: '320px 320px',
+                imageRendering: 'auto'
+              }}
             />
           </div>
           <div className="lg:w-1/2 text-center lg:text-left order-2 lg:order-1 scroll-reveal-left">

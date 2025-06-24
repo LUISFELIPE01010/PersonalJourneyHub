@@ -18,6 +18,9 @@ Website para personal trainer com seção de vídeos do Instagram que apresenta 
 - Carousel responsivo funciona em todos os dispositivos
 - Preload metadata para gerar thumbnails automaticamente
 - Navegação por swipe suave no mobile
+- 2025-01-24: Otimizada imagem do Hero para carregamento rápido no mobile
+- Botão "Começar Agora" do quiz agora leva direto ao WhatsApp
+- Adicionadas otimizações CSS para GPU acceleration e rendering
 
 ## Project Architecture  
 - Frontend: React/TypeScript com Vite

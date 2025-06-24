@@ -206,12 +206,9 @@ const Quiz = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button 
                     onClick={() => {
-                      const contactSection = document.getElementById("contato");
-                      if (contactSection) {
-                        contactSection.scrollIntoView({ behavior: "smooth" });
-                      }
+                      window.open('https://wa.me/5513997676164?text=Olá! Acabei de fazer o quiz e quero começar meu treino personalizado!', '_blank');
                     }}
-                    className="flex-1 py-3 text-lg"
+                    className="flex-1 py-3 text-lg bg-green-600 hover:bg-green-700"
                     size="lg"
                   >
                     Começar Agora
