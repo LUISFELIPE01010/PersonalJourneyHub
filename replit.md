@@ -87,6 +87,9 @@ The application follows a full-stack monorepo structure with:
 Changelog:
 - June 23, 2025. Initial setup
 - June 24, 2025. Major optimizations: Mobile-first design, Instagram videos cleanup, touch navigation, performance improvements
+- January 25, 2025. Migration to Replit environment completed successfully
+- January 25, 2025. Benefits section redesigned to focus on training locations (Ironberg Alphaville, private condominiums)
+- January 25, 2025. Added motivational quote section between testimonials and videos
 
 ## User Preferences
 

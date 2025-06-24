@@ -19,28 +19,31 @@ const Benefits = () => {
     <section id="beneficios" className="py-16 md:py-20 section-fade">
       <div className="container-custom">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="section-title">O que você ganha treinando com Junior Nobrega?</h2>
+          <h2 className="section-title">Onde você pode treinar comigo</h2>
           <div className="section-divider"></div>
+          <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+            Oferecemos treinos personalizados em diferentes locais para atender às suas necessidades e preferências
+          </p>
         </div>
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
           <BenefitCard 
-            image="https://images.unsplash.com/photo-1571019613576-2b22c76fd955?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
-            title="Emagrecimento eficaz" 
-            description="Reduza gordura corporal com treinos personalizados, nutrição estratégica e disciplina."
+            image="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
+            title="Ironberg Alphaville" 
+            description="Academia completa e moderna no coração de Alphaville, com equipamentos de última geração e ambiente motivador para seus treinos."
           />
           
           <BenefitCard 
-            image="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
-            title="Hipertrofia com segurança" 
-            description="Aumente sua massa muscular com metodologia segura, progressiva e motivadora."
+            image="https://images.unsplash.com/photo-1571019613576-2b22c76fd955?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
+            title="Treino Particular em Condomínios" 
+            description="Atendimento personalizado na academia do seu condomínio, com toda comodidade e privacidade que você merece."
           />
           
           <div className="sm:col-span-2 lg:col-span-1 sm:mx-auto lg:mx-0 sm:max-w-sm lg:max-w-none">
             <BenefitCard 
               image="https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400" 
-              title="Motivação para evoluir" 
-              description="Mais do que treinar, você aprende a manter o foco e a energia para não desistir."
+              title="Flexibilidade Total" 
+              description="Escolha o local que melhor se adapta à sua rotina. Treino onde você se sente mais confortável e motivado."
             />
           </div>
         </div>

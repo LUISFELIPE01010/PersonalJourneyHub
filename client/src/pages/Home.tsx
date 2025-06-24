@@ -4,6 +4,7 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import Benefits from "../components/Benefits";
 import Testimonials from "../components/Testimonials";
+import MotivationalQuote from "../components/MotivationalQuote";
 import Gallery from "../components/Gallery";
 import Quiz from "../components/Quiz";
 import InstagramVideos from "../components/InstagramVideos";
@@ -51,6 +52,7 @@ export default function Home() {
       <Benefits />
       <Quiz />
       <Testimonials />
+      <MotivationalQuote />
       <InstagramVideos />
       <Gallery />
       <CallToAction />

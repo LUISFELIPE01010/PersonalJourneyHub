@@ -57,7 +57,7 @@ const Header = () => {
             onClick={() => scrollToSection("beneficios")}
             className="font-medium hover:text-primary transition"
           >
-            Benefícios
+            Locais de Treino
           </button>
           <button 
             onClick={() => scrollToSection("quiz")}
