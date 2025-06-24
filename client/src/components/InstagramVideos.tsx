@@ -14,21 +14,21 @@ const instagramPosts: InstagramPost[] = [
   {
     id: 1,
     title: "Condicionamento Físico",
-    description: "Exercícios para melhorar seu condicionamento geral",
+    description: "",
     embedUrl: "https://www.instagram.com/reel/DIzLyKdx5h2/",
     postId: "DIzLyKdx5h2"
   },
   {
     id: 2,
-    title: "Performance Avançada",
-    description: "Dicas avançadas para atletas e praticantes experientes",
-    embedUrl: "https://www.instagram.com/reel/DHv96xnR4ko/",
-    postId: "DHv96xnR4ko"
+    title: "Performance Avançada", 
+    description: "",
+    embedUrl: "https://www.instagram.com/reel/DArQoWhRjQ4/",
+    postId: "DArQoWhRjQ4"
   },
   {
     id: 3,
     title: "Novo Treino",
-    description: "Últimas técnicas e dicas de treino para máximos resultados",
+    description: "",
     embedUrl: "https://www.instagram.com/reel/DIJQ0fGRdrn/",
     postId: "DIJQ0fGRdrn"
   }
@@ -49,12 +49,9 @@ const InstagramPostCard = ({ post }: { post: InstagramPost }) => {
   return (
     <div className="w-full max-w-sm mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
       <div className="p-4">
-        <h4 className="font-bold text-gray-900 mb-2 text-lg">
+        <h4 className="font-bold text-gray-900 mb-4 text-lg">
           {post.title}
         </h4>
-        <p className="text-sm text-gray-600 mb-4">
-          {post.description}
-        </p>
         
         <div className="bg-gray-50 rounded-lg p-4">
           <div 
@@ -320,14 +317,14 @@ const InstagramVideos = () => {
 
           {/* Dots Indicator - Smaller dots especially on mobile */}
           {maxIndex > 0 && (
-            <div className="flex justify-center mt-8 space-x-2">
+            <div className="flex justify-center mt-8 space-x-1.5">
               {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
                   className={`rounded-full transition-all duration-200 ${
                     index === currentIndex 
-                      ? 'bg-primary w-3 h-1.5 md:w-6 md:h-2' 
+                      ? 'bg-primary w-2 h-2 md:w-3 md:h-3' 
                       : 'bg-gray-300 hover:bg-gray-400 w-1.5 h-1.5 md:w-2 md:h-2'
                   }`}
                 />
