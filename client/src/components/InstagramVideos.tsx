@@ -122,7 +122,11 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
   return (
     <div 
       className="relative bg-black rounded-xl overflow-hidden shadow-lg"
-      style={{ aspectRatio: '9/16', minHeight: '300px' }}
+      style={{ 
+        aspectRatio: '9/16', 
+        minHeight: '300px',
+        touchAction: 'pan-y' // Allow vertical scrolling
+      }}
     >
       {/* Video Element */}
       <video
@@ -139,7 +143,7 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
         onCanPlay={() => setShowThumbnail(false)}
         style={{ 
           backgroundColor: '#000',
-          touchAction: 'none'
+          touchAction: 'pan-y' // Allow vertical scrolling over video
         }}
         poster=""
       >
@@ -161,7 +165,8 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-16 md:h-16 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white z-10 transition-all active:scale-95"
           style={{ 
             touchAction: 'manipulation',
-            WebkitTapHighlightColor: 'transparent'
+            WebkitTapHighlightColor: 'transparent',
+            pointerEvents: 'auto'
           }}
         >
           <Play className="w-8 h-8 md:w-6 md:h-6 ml-1" fill="white" />
@@ -175,8 +180,9 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
           onTouchEnd={togglePlay}
           className="absolute inset-0 bg-transparent z-10"
           style={{ 
-            touchAction: 'manipulation',
-            WebkitTapHighlightColor: 'transparent'
+            touchAction: 'pan-y',
+            WebkitTapHighlightColor: 'transparent',
+            pointerEvents: 'auto'
           }}
         />
       )}
@@ -188,7 +194,8 @@ const VideoCard = ({ video }: { video: VideoPost }) => {
         className="absolute top-3 right-3 w-12 h-12 md:w-10 md:h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white z-10 transition-all active:scale-95"
         style={{ 
           touchAction: 'manipulation',
-          WebkitTapHighlightColor: 'transparent'
+          WebkitTapHighlightColor: 'transparent',
+          pointerEvents: 'auto'
         }}
       >
         {isMuted ? <VolumeX className="w-5 h-5 md:w-4 md:h-4" /> : <Volume2 className="w-5 h-5 md:w-4 md:h-4" />}
@@ -244,25 +251,42 @@ const InstagramVideos = () => {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    // Store Y position to detect vertical scrolling intent
+    const touchStartY = e.touches[0].clientY;
+    (touchStartX.current as any).startY = touchStartY;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     const touchEndX = e.changedTouches[0].clientX;
-    const difference = touchStartX.current - touchEndX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const touchStartY = (touchStartX.current as any).startY || touchEndY;
+    
+    const differenceX = touchStartX.current - touchEndX;
+    const differenceY = Math.abs(touchStartY - touchEndY);
 
-    // Only trigger swipe if movement is significant and we're in mobile mode
-    if (Math.abs(difference) > 80 && slidesToShow === 1) {
+    // Only trigger horizontal swipe if:
+    // 1. Movement is primarily horizontal (more X than Y)
+    // 2. Horizontal movement is significant (>80px)
+    // 3. Vertical movement is minimal (<30px) 
+    // 4. We're in single slide mode (mobile)
+    if (Math.abs(differenceX) > 80 && 
+        Math.abs(differenceX) > differenceY && 
+        differenceY < 30 && 
+        slidesToShow === 1) {
       e.preventDefault();
-      if (difference > 0 && currentIndex < videoPosts.length - 1) {
+      e.stopPropagation();
+      
+      if (differenceX > 0 && currentIndex < videoPosts.length - 1) {
         setCurrentIndex(prev => prev + 1);
-      } else if (difference < 0 && currentIndex > 0) {
+      } else if (differenceX < 0 && currentIndex > 0) {
         setCurrentIndex(prev => prev - 1);
       }
     }
+    // Otherwise, let the browser handle the touch (vertical scroll)
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-white to-gray-50">
+    <section className="py-16 bg-gradient-to-br from-white to-gray-50 video-section">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Dicas de Treino em Vídeo</h2>
@@ -307,7 +331,7 @@ const InstagramVideos = () => {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
             style={{
-              touchAction: 'pan-x',
+              touchAction: 'pan-y pan-x',
               WebkitOverflowScrolling: 'touch'
             }}
           >
@@ -322,7 +346,8 @@ const InstagramVideos = () => {
                   key={video.id} 
                   className="flex-shrink-0 w-full max-w-xs mx-auto"
                   style={{ 
-                    width: slidesToShow === 1 ? '100%' : `${100 / slidesToShow}%`
+                    width: slidesToShow === 1 ? '100%' : `${100 / slidesToShow}%`,
+                    touchAction: 'pan-y' // Ensure vertical scroll works in video containers
                   }}
                 >
                   <VideoCard video={video} />

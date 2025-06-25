@@ -99,7 +99,7 @@ h1, h2, h3, h4, h5, h6 {
   
   /* Video controls optimization for mobile */
   video {
-    touch-action: manipulation;
+    touch-action: pan-y;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
@@ -114,9 +114,18 @@ h1, h2, h3, h4, h5, h6 {
     user-select: none;
   }
   
-  /* Prevent zoom on double tap */
-  * {
-    touch-action: manipulation;
+  /* Ensure vertical scrolling is always allowed */
+  body, html {
+    touch-action: pan-y pinch-zoom;
+  }
+  
+  /* Ensure video sections don't block scroll */
+  .video-section * {
+    touch-action: pan-y !important;
+  }
+  
+  .video-section video {
+    touch-action: pan-y !important;
   }
 }
 img[loading="lazy"] {
